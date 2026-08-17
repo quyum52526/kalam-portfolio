@@ -1,12 +1,192 @@
 @import "tailwindcss";
 
 :root {
-  --background: #080808;
-  --foreground: #f2f2f2;
-  --muted: #8a8a8e;
-  --border: #1f1f1f;
-  --surface: #0f0f0f;
-  --glow: 120, 119, 198;
+  /* ==== kalam52526 Design System tokens ==== */
+
+  /* ---- Core palette (Midnight Creative) ---- */
+  --navy-900: #101828; /* Midnight Navy — primary background */
+  --cyan-400: #22d3ee; /* Signature accent — the mark */
+  --blue-600: #2563eb; /* Electric Blue — links & primary buttons */
+  --violet-600: #7c3aed; /* Violet — secondary accent */
+  --white-50: #f8fafc; /* Soft White — main text on dark */
+  --slate-400: #94a3b8; /* Slate Gray — secondary text */
+
+  /* ---- Navy tints ---- */
+  --navy-950: #0a0f1c;
+  --navy-800: #1a2436;
+  --navy-700: #25314a;
+  --navy-600: #33415e;
+  --navy-500: #475569;
+
+  /* ---- Cyan tints ---- */
+  --cyan-700: #0e7490;
+  --cyan-600: #0891b2;
+  --cyan-500: #06b6d4;
+  --cyan-300: #67e8f9;
+  --cyan-200: #a5f3fc;
+  --cyan-100: #cffafe;
+
+  /* ---- Neutrals for light surfaces ---- */
+  --white: #ffffff;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-600: #475569;
+  --slate-700: #334155;
+
+  /* ---- Semantic ---- */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* ---- Semantic aliases — dark (default brand surface) ---- */
+  --surface-page: var(--navy-900);
+  --surface-raised: var(--navy-800);
+  --surface-card: rgba(248, 250, 252, 0.04);
+  --surface-inset: var(--navy-950);
+  --border-subtle: rgba(248, 250, 252, 0.1);
+  --border-strong: rgba(248, 250, 252, 0.2);
+  --border-accent: var(--cyan-400);
+  --text-body: var(--white-50);
+  --text-muted: var(--slate-400);
+  --text-inverse: var(--navy-900);
+  --text-accent: var(--cyan-400);
+  --text-link: var(--cyan-300);
+  --action-primary: var(--blue-600);
+  --action-primary-hover: #1d4fd8;
+  --action-accent: var(--cyan-400);
+  --focus-ring: var(--cyan-400);
+
+  /* Gradients — covers, video intros, banners only. Never on logo, body text or icons */
+  --gradient-brand: linear-gradient(120deg, #101828 0%, #1e3a8a 45%, #22d3ee 100%);
+  --gradient-accent: linear-gradient(90deg, #22d3ee 0%, #7c3aed 100%);
+
+  /* ---- Spacing scale ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  --container-max: 1200px;
+  --container-narrow: 720px;
+  --gutter: 24px;
+
+  /* Badge geometry from the brand book: corner radius = 22.5% of width */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+  --radius-badge: 22.5%;
+  --radius-pill: 999px;
+
+  /* ---- Typography ---- */
+  --font-display: var(--next-font-display), "Plus Jakarta Sans", "Noto Sans Bengali",
+    system-ui, sans-serif;
+  --font-body: var(--next-font-body), "Inter", "Noto Sans Bengali", system-ui,
+    sans-serif;
+  --font-accent: var(--next-font-accent), "Space Grotesk", "Plus Jakarta Sans",
+    system-ui, sans-serif;
+  --font-bangla: var(--next-font-bangla), "Noto Sans Bengali", "Inter", system-ui,
+    sans-serif;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* Print scale from the brand book (pt-equivalents, in px) */
+  --text-h1-size: 34px;
+  --text-h1-line: 40px;
+  --text-h1-track: -1px;
+  --text-h2-size: 25px;
+  --text-h2-line: 32px;
+  --text-h2-track: -0.5px;
+  --text-h3-size: 13px;
+  --text-h3-line: 18px;
+  --text-h3-track: 0.4px;
+  --text-body-size: 11.5px;
+  --text-body-line: 19px;
+  --text-caption-size: 9.5px;
+  --text-caption-line: 15px;
+  --text-caption-track: 1.5px;
+
+  /* Screen scale — the same ratios, scaled up for UI */
+  --size-display: 56px;
+  --line-display: 60px;
+  --size-xl: 40px;
+  --line-xl: 46px;
+  --size-lg: 28px;
+  --line-lg: 36px;
+  --size-md: 20px;
+  --line-md: 28px;
+  --size-base: 16px;
+  --line-base: 26px;
+  --size-sm: 14px;
+  --line-sm: 22px;
+  --size-xs: 12px;
+  --line-xs: 18px;
+  --size-label: 11px;
+  --line-label: 16px;
+
+  --track-tight: -1px;
+  --track-normal: 0;
+  --track-label: 0.16em;
+
+  /* ---- Effects ---- */
+  --shadow-sm: 0 1px 2px rgba(10, 15, 28, 0.3);
+  --shadow-md: 0 6px 20px rgba(10, 15, 28, 0.35);
+  --shadow-lg: 0 18px 48px rgba(10, 15, 28, 0.45);
+  --shadow-glow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 8px 32px rgba(34, 211, 238, 0.2);
+  --shadow-inset: inset 0 1px 0 rgba(248, 250, 252, 0.06);
+
+  --ring-focus: 0 0 0 3px rgba(34, 211, 238, 0.45);
+
+  --effect-border-width: 1px;
+  --blur-panel: blur(14px);
+  --overlay-scrim: linear-gradient(
+    180deg,
+    rgba(16, 24, 40, 0) 0%,
+    rgba(16, 24, 40, 0.88) 100%
+  );
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 400ms;
+  --press-scale: 0.97;
+
+  /* ==== Site aliases — keep existing utility classes (bg-background, text-muted, ...) working ==== */
+  --background: var(--surface-page);
+  --foreground: var(--text-body);
+  --muted: var(--text-muted);
+  --border: var(--border-subtle);
+  --surface: var(--surface-raised);
+  --glow: 34, 211, 238; /* cyan-400 as an rgb triplet, for rgba(var(--glow), alpha) */
+}
+
+/* Light surface scope — use on print, invoices, documents */
+.theme-light {
+  --surface-page: var(--white);
+  --surface-raised: var(--white);
+  --surface-card: var(--white);
+  --surface-inset: var(--slate-100);
+  --border-subtle: var(--slate-200);
+  --border-strong: var(--slate-300);
+  --text-body: var(--navy-900);
+  --text-muted: var(--slate-600);
+  --text-inverse: var(--white-50);
+  --text-accent: var(--cyan-700);
+  --text-link: var(--blue-600);
 }
 
 @theme inline {
@@ -15,21 +195,59 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-surface: var(--surface);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-navy-600: var(--navy-600);
+  --color-navy-500: var(--navy-500);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --color-surface-page: var(--surface-page);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-card: var(--surface-card);
+  --color-surface-inset: var(--surface-inset);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-border-accent: var(--border-accent);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-accent: var(--text-accent);
+  --color-text-link: var(--text-link);
+  --color-action-primary: var(--action-primary);
+  --color-action-primary-hover: var(--action-primary-hover);
+  --color-action-accent: var(--action-accent);
+  --color-focus-ring: var(--focus-ring);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-accent: var(--font-accent);
+  --font-bangla: var(--font-bangla);
+
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   font-feature-settings: "ss01" 1, "cv01" 1;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
   background: rgba(var(--glow), 0.35);
-  color: #fff;
+  color: var(--white-50);
 }
 
 /* Mouse-tracked spotlight — element sets --spot-x / --spot-y on mousemove.

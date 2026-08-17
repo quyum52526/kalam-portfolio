@@ -18,7 +18,7 @@ export function Button({
         variant === "primary" &&
           "bg-foreground text-background hover:opacity-90",
         variant === "outline" &&
-          "border border-border hover:bg-white/[.04]",
+          "border border-border hover:bg-surface-card",
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ export function LinkButton({
         variant === "primary" &&
           "bg-foreground text-background hover:opacity-90",
         variant === "outline" &&
-          "border border-border hover:bg-white/[.04]",
+          "border border-border hover:bg-surface-card",
         className
       )}
       {...props}

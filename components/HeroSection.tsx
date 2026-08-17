@@ -7,7 +7,7 @@ export default function HeroSection() {
     <section className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_20%,rgba(120,119,198,0.25),transparent_60%)]"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_20%,rgba(var(--glow),0.25),transparent_60%)]"
       />
       <motion.h1
         initial={{ opacity: 0, y: 20 }}

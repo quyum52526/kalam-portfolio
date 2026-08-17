@@ -32,7 +32,7 @@ export default function MotionPage() {
             <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted">
               Featured Showreel
             </p>
-            <div className="relative aspect-video overflow-hidden rounded-2xl border border-border bg-black">
+            <div className="relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface-inset">
               {showreelEmbed?.type === "mp4" && (
                 <VideoPlayer
                   src={showreelEmbed.src}

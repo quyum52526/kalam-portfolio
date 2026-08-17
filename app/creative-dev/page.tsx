@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function CreativeDevPage() {
   const creativeDevProjects = projects.filter(
-    (p) => p.category === "creative-dev"
+    (p) => p.category === "frontend"
   );
 
   return (
@@ -38,7 +38,7 @@ export default function CreativeDevPage() {
         {creativeDevProjects.map((project) => (
           <article
             key={project.id}
-            className="group flex flex-col rounded-2xl border border-border bg-surface p-5 transition-colors hover:border-white/20"
+            className="group flex flex-col rounded-2xl border border-border bg-surface p-5 transition-colors hover:border-border-strong"
           >
             <h2 className="font-medium">{project.title}</h2>
             <p className="mt-1 text-sm text-muted">{project.description}</p>
@@ -68,7 +68,7 @@ export default function CreativeDevPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View source on GitHub"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-4 py-2 text-xs font-medium transition-colors hover:bg-white/[.04]"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border px-4 py-2 text-xs font-medium transition-colors hover:bg-surface-card"
                   >
                     <GithubIcon className="h-3.5 w-3.5" />
                   </a>

@@ -1,24 +1,39 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Plus_Jakarta_Sans,
+  Inter,
+  Space_Grotesk,
+  Noto_Sans_Bengali,
+} from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fontDisplay = Plus_Jakarta_Sans({
+  variable: "--next-font-display",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fontBody = Inter({
+  variable: "--next-font-body",
   subsets: ["latin"],
+});
+
+const fontAccent = Space_Grotesk({
+  variable: "--next-font-accent",
+  subsets: ["latin"],
+});
+
+const fontBangla = Noto_Sans_Bengali({
+  variable: "--next-font-bangla",
+  subsets: ["bengali", "latin"],
 });
 
 const siteUrl = "https://kalamcreative.com";
 const defaultTitle = "Abu Kalam — Motion Designer & Creative Developer";
 const defaultDescription =
-  "Portfolio of motion graphics, AI video, and interactive front-end work.";
+  "Portfolio of Abu Kalam Khandaker | Motion Graphics, AI Video & Interactive Frontend";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -46,7 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${fontDisplay.variable} ${fontBody.variable} ${fontAccent.variable} ${fontBangla.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SmoothScroll>

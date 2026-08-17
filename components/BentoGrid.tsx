@@ -2,31 +2,44 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { projects, type Project, type ProjectCategory } from "@/data/projects";
+import { projects, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import ProjectModal from "@/components/ProjectModal";
 import { ProjectCard } from "@/components/ProjectCard";
 
-const filters: { label: string; value: ProjectCategory | "all" }[] = [
+type FilterValue = "all" | "motion-video" | "shorts" | "design" | "frontend";
+
+const filters: { label: string; value: FilterValue }[] = [
   { label: "All", value: "all" },
-  { label: "Motion", value: "motion" },
-  { label: "AI Video", value: "ai-video" },
-  { label: "Creative Dev", value: "creative-dev" },
+  { label: "Motion & Video", value: "motion-video" },
+  { label: "Shorts (9:16)", value: "shorts" },
+  { label: "Graphic Design", value: "design" },
+  { label: "Web Development", value: "frontend" },
 ];
 
+function matchesFilter(project: Project, filter: FilterValue): boolean {
+  switch (filter) {
+    case "all":
+      return true;
+    case "motion-video":
+      return project.category === "motion" || project.category === "ai-video";
+    case "shorts":
+      return project.aspectRatio === "9:16";
+    case "design":
+      return project.category === "design";
+    case "frontend":
+      return project.category === "frontend";
+  }
+}
+
 export default function BentoGrid() {
-  const [activeFilter, setActiveFilter] = useState<ProjectCategory | "all">(
-    "all"
-  );
+  const [activeFilter, setActiveFilter] = useState<FilterValue>("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(
     null
   );
 
   const filteredProjects = useMemo(
-    () =>
-      activeFilter === "all"
-        ? projects
-        : projects.filter((p) => p.category === activeFilter),
+    () => projects.filter((p) => matchesFilter(p, activeFilter)),
     [activeFilter]
   );
 

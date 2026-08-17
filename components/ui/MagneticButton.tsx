@@ -42,7 +42,7 @@ export function MagneticButton({
       onMouseLeave={handleLeave}
       style={{ x: springX, y: springY }}
       className={cn(
-        "flex items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm transition-colors hover:bg-white/20",
+        "flex items-center justify-center rounded-full border border-border-strong bg-text-body/10 backdrop-blur-sm transition-colors hover:bg-text-body/20",
         className
       )}
     >

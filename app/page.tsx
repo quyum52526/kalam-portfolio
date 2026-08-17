@@ -15,9 +15,9 @@ export default function Home() {
           <h2 className="mb-6 text-sm font-medium uppercase tracking-wider text-muted">
             Featured Reel
           </h2>
-          <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-black">
+          <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-surface-inset">
             {featuredReel.videoUrl ? (
-              <VideoPlayer src={featuredReel.videoUrl} controls />
+              <VideoPlayer src={featuredReel.videoUrl} autoPlay controls />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-muted">
                 Reel coming soon
