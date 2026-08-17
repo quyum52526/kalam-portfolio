@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #080808;
+  --foreground: #f2f2f2;
+  --muted: #8a8a8e;
+  --border: #1f1f1f;
+  --surface: #0f0f0f;
+  --glow: 120, 119, 198;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-feature-settings: "ss01" 1, "cv01" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(var(--glow), 0.35);
+  color: #fff;
+}
+
+/* Mouse-tracked spotlight — element sets --spot-x / --spot-y on mousemove.
+   Gated to fine-pointer/hover-capable devices so a tap on touch screens
+   never leaves the glow (or magnetic buttons) stuck in a "hover" state. */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      500px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(var(--glow), 0.16),
+      transparent 45%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
 }
