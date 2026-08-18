@@ -1,11 +1,26 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { projects, type Project } from "@/data/projects";
+import { AnimatePresence, motion } from "framer-motion";
+import { projects, type GridSpan, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import ProjectModal from "@/components/ProjectModal";
 import { ProjectCard } from "@/components/ProjectCard";
+import { TerminalCodeBackground } from "@/components/TerminalCodeBackground";
+
+const SPAN_CLASSES: Record<GridSpan, string> = {
+  wide: "col-span-12 sm:col-span-8",
+  tall: "col-span-6 sm:col-span-4 row-span-2",
+  square: "col-span-6 sm:col-span-4",
+  compact: "col-span-12 sm:col-span-6",
+};
+
+function getGridSpan(project: Project): GridSpan {
+  if (project.gridSpan) return project.gridSpan;
+  if (project.aspectRatio === "9:16") return "tall";
+  if (project.aspectRatio === "1:1") return "square";
+  return "compact";
+}
 
 type FilterValue = "all" | "motion-video" | "shorts" | "design" | "frontend";
 
@@ -44,7 +59,25 @@ export default function BentoGrid() {
   );
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
+    <section
+      id="projects-grid"
+      className="relative mx-auto max-w-6xl px-6 py-16"
+    >
+      <AnimatePresence>
+        {activeFilter === "motion-video" && (
+          <motion.div
+            key="terminal-bg"
+            className="absolute inset-0 -z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <TerminalCodeBackground />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="mb-10 inline-flex gap-1 rounded-full border border-border bg-surface p-1">
         {filters.map((filter) => (
           <button
@@ -71,13 +104,13 @@ export default function BentoGrid() {
 
       <motion.div
         layout
-        className="grid auto-rows-[240px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid grid-cols-12 auto-rows-[220px] gap-6"
       >
         {filteredProjects.map((project) => (
           <ProjectCard
             key={project.id}
             project={project}
-            featured={project.featured}
+            className={SPAN_CLASSES[getGridSpan(project)]}
             onClick={() => setSelectedProject(project)}
           />
         ))}

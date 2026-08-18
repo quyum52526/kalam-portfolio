@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Maximize2, Play } from "lucide-react";
 import type { Project } from "@/data/projects";
-import { cn, handleSpotlightMove } from "@/lib/utils";
+import { cn, handleSpotlightMove, supportsFinePointer } from "@/lib/utils";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 
 /**
@@ -14,26 +15,52 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 export function ProjectCard({
   project,
   onClick,
-  featured = false,
   className,
 }: {
   project: Project;
   onClick: () => void;
-  featured?: boolean;
   className?: string;
 }) {
   const isDesign = project.category === "design";
+  const ref = useRef<HTMLButtonElement>(null);
+
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30, mass: 0.5 });
+  const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30, mass: 0.5 });
+
+  function handleMove(e: React.MouseEvent<HTMLButtonElement>) {
+    handleSpotlightMove(e);
+    if (!supportsFinePointer()) return;
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    rotateY.set(px * 10);
+    rotateX.set(py * -10);
+  }
+
+  function handleLeave() {
+    rotateX.set(0);
+    rotateY.set(0);
+  }
 
   return (
     <motion.button
+      ref={ref}
       layout
       onClick={onClick}
-      onMouseMove={handleSpotlightMove}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
+      style={{
+        rotateX: springRotateX,
+        rotateY: springRotateY,
+        transformPerspective: 800,
+      }}
       className={cn(
-        "spotlight group relative overflow-hidden rounded-2xl border border-border bg-surface text-left transition-shadow duration-300 hover:border-border-strong hover:shadow-[0_0_40px_-12px_rgba(var(--glow),0.35)]",
-        featured && "sm:col-span-2 sm:row-span-2",
+        "spotlight group relative overflow-hidden rounded-2xl border border-neutral-800/60 bg-neutral-950/80 text-left backdrop-blur-xl transition-colors duration-300 hover:border-cyan-500/50",
         className
       )}
     >
