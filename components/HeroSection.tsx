@@ -348,7 +348,7 @@ export default function HeroSection() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8, ease: EASE_OUT }}
               style={{ bottom: "calc(-1 * var(--portrait-bottom-offset, 0px))" }}
-              className="pointer-events-none absolute left-1/2 z-[1] h-[var(--portrait-height,420px)] w-auto max-w-none -translate-x-[calc(50%+225px)] object-contain object-bottom [mix-blend-mode:luminosity] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_12%,black_88%,transparent_100%),linear-gradient(to_bottom,black_0%,black_87%,transparent_100%)] [-webkit-mask-composite:source-in] [mask-image:linear-gradient(to_right,transparent_0%,black_12%,black_88%,transparent_100%),linear-gradient(to_bottom,black_0%,black_87%,transparent_100%)] [mask-composite:intersect]"
+              className="pointer-events-none absolute left-1/2 z-[1] h-[var(--portrait-height,420px)] w-auto max-w-none -translate-x-1/2 object-contain object-bottom [mix-blend-mode:luminosity] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_12%,black_88%,transparent_100%),linear-gradient(to_bottom,black_0%,black_87%,transparent_100%)] [-webkit-mask-composite:source-in] [mask-image:linear-gradient(to_right,transparent_0%,black_12%,black_88%,transparent_100%),linear-gradient(to_bottom,black_0%,black_87%,transparent_100%)] [mask-composite:intersect]"
             />
           </AnimatePresence>
         </div>
