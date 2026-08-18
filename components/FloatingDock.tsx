@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -10,14 +10,12 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { Home, Sparkles, Code2, LayoutGrid, Mail, type LucideIcon } from "lucide-react";
+import { Home, LayoutGrid, Mail, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/motion", label: "Motion & AI", icon: Sparkles },
-  { href: "/creative-dev", label: "Creative Dev", icon: Code2 },
-  { href: "/#projects-grid", label: "Projects", icon: LayoutGrid },
+  { href: "/work", label: "Work", icon: LayoutGrid },
   { href: "/contact", label: "Contact", icon: Mail },
 ];
 
@@ -80,21 +78,6 @@ function DockItem({
 export function FloatingDock() {
   const pathname = usePathname();
   const mouseX = useMotionValue(Infinity);
-  const [projectsInView, setProjectsInView] = useState(false);
-
-  useEffect(() => {
-    const el = document.getElementById("projects-grid");
-    if (!el) {
-      setProjectsInView(false);
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => setProjectsInView(entry.isIntersecting),
-      { rootMargin: "-45% 0px -45% 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [pathname]);
 
   return (
     <motion.div
@@ -110,9 +93,9 @@ export function FloatingDock() {
       >
         {items.map((item) => {
           const active =
-            item.href === "/#projects-grid"
-              ? pathname === "/" && projectsInView
-              : pathname === item.href;
+            item.href === "/"
+              ? pathname === "/"
+              : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
           return (
             <DockItem

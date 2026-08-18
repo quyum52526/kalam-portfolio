@@ -31,7 +31,7 @@ const fontBangla = Noto_Sans_Bengali({
   subsets: ["bengali", "latin"],
 });
 
-const siteUrl = "https://kalamcreative.com";
+export const siteUrl = "https://kalamcreative.com";
 const defaultTitle = "Abu Kalam — Motion Designer & Creative Developer";
 const defaultDescription =
   "Portfolio of Abu Kalam Khandaker | Motion Graphics, AI Video & Interactive Frontend";

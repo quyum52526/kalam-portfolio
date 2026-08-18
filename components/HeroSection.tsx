@@ -12,6 +12,7 @@ import {
 import { cn, supportsFinePointer } from "@/lib/utils";
 import { RoleCanvas } from "@/components/hero/RoleCanvas";
 import type { HeroCanvasRoleId } from "@/lib/hero/roleStates";
+import { getCategoryByHeroRole } from "@/data/categories";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 const ROLE_CYCLE_MS = 4500;
@@ -68,16 +69,6 @@ const roles: Role[] = [
     bgClass: "bg-emerald-400",
   },
 ];
-
-function scrollToId(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (window.__lenis) {
-    window.__lenis.scrollTo(el, { offset: -80 });
-  } else {
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
 
 export default function HeroSection() {
   const mouseX = useMotionValue(50);
@@ -330,7 +321,9 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.85, ease: EASE_OUT }}
             className="mt-8 flex flex-wrap items-center gap-4"
           >
-            <MagneticCta onClick={() => scrollToId("projects-grid")}>
+            <MagneticCta
+              href={`/work/${getCategoryByHeroRole(activeRole.id)?.slug ?? ""}`}
+            >
               Explore Work <span aria-hidden>↓</span>
             </MagneticCta>
             <MagneticLink href="/contact">
@@ -382,17 +375,17 @@ export default function HeroSection() {
 
 function MagneticCta({
   children,
-  onClick,
+  href,
 }: {
   children: React.ReactNode;
-  onClick: () => void;
+  href: string;
 }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 300, damping: 20, mass: 0.5 });
   const springY = useSpring(y, { stiffness: 300, damping: 20, mass: 0.5 });
 
-  function handleMove(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleMove(e: React.MouseEvent<HTMLAnchorElement>) {
     if (!supportsFinePointer()) return;
     const rect = e.currentTarget.getBoundingClientRect();
     x.set((e.clientX - (rect.left + rect.width / 2)) * 0.3);
@@ -405,16 +398,20 @@ function MagneticCta({
   }
 
   return (
-    <motion.button
-      onClick={onClick}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
+    <motion.div
       style={{ x: springX, y: springY }}
       whileTap={{ scale: 0.96 }}
-      className="inline-flex h-12 items-center gap-2 rounded-full bg-text-body px-6 text-sm font-semibold text-navy-900 transition-opacity hover:opacity-90"
+      className="inline-block"
     >
-      {children}
-    </motion.button>
+      <Link
+        href={href}
+        onMouseMove={handleMove}
+        onMouseLeave={handleLeave}
+        className="inline-flex h-12 items-center gap-2 rounded-full bg-text-body px-6 text-sm font-semibold text-navy-900 transition-opacity hover:opacity-90"
+      >
+        {children}
+      </Link>
+    </motion.div>
   );
 }
 

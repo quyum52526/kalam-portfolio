@@ -6,11 +6,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { workCategories } from "@/data/categories";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/motion", label: "Motion & AI" },
-  { href: "/creative-dev", label: "Creative Dev" },
+  ...workCategories.map((category) => ({
+    href: `/work/${category.slug}`,
+    label: category.navLabel,
+  })),
   { href: "/contact", label: "Contact" },
 ];
 
