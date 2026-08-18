@@ -9,6 +9,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FloatingDock } from "@/components/FloatingDock";
 
 const fontDisplay = Plus_Jakarta_Sans({
   variable: "--next-font-display",
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <FloatingDock />
         </SmoothScroll>
       </body>
     </html>

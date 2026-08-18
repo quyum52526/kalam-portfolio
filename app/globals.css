@@ -26,6 +26,9 @@
   --cyan-200: #a5f3fc;
   --cyan-100: #cffafe;
 
+  /* ---- Violet tints ---- */
+  --violet-400: #a78bfa; /* WCAG-safe violet for small text/UI on navy (6.46:1) — --violet-600 is core-brand only */
+
   /* ---- Neutrals for light surfaces ---- */
   --white: #ffffff;
   --slate-100: #f1f5f9;
@@ -151,6 +154,11 @@
 
   --effect-border-width: 1px;
   --blur-panel: blur(14px);
+  --blur-panel-strong: blur(28px);
+  /* Hero role-canvas card — solid tinted panel (no blur, so it never smears the portrait behind it). */
+  --card-panel-bg: rgba(10, 15, 28, 0.55); /* navy-950 tint */
+  --card-shadow: -18px 28px 60px -20px rgba(10, 15, 28, 0.65);
+  --card-edge-light: inset 1px 1px 0 rgba(248, 250, 252, 0.1);
   --overlay-scrim: linear-gradient(
     180deg,
     rgba(16, 24, 40, 0) 0%,
@@ -172,6 +180,8 @@
   --border: var(--border-subtle);
   --surface: var(--surface-raised);
   --glow: 34, 211, 238; /* cyan-400 as an rgb triplet, for rgba(var(--glow), alpha) */
+  --glow-violet: 124, 58, 237; /* violet-600 as an rgb triplet */
+  --glow-amber: 245, 158, 11; /* warning/amber-500 as an rgb triplet */
 }
 
 /* Light surface scope — use on print, invoices, documents */
