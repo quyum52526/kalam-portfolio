@@ -18,6 +18,10 @@ import {
   seededRandom,
   MOTION_KEY_COUNT,
   BRAND_SWATCH_COUNT,
+  WEB_DEV_TREE_NODE_COUNT,
+  webDevEdges,
+  webDevNodeDepth,
+  type WebDevEdge,
 } from "@/lib/hero/roleStates";
 
 const MOBILE_BREAKPOINT = 768;
@@ -57,6 +61,47 @@ function rgba(rgb: Rgb, a: number): string {
   return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
 }
 
+/** Draws a right-angle elbow (down / across / down) from (x1,y1) to (x2,y2), revealing only
+ *  the first `progress` (0..1) fraction of its total path length — the stroke-reveal used by
+ *  the web-dev component-tree cascade instead of a diagonal line. */
+function drawElbowPartial(
+  c: CanvasRenderingContext2D,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  progress: number,
+  color: string
+) {
+  if (progress <= 0) return;
+  const midY = (y1 + y2) / 2;
+  const segs = [
+    { ax: x1, ay: y1, bx: x1, by: midY },
+    { ax: x1, ay: midY, bx: x2, by: midY },
+    { ax: x2, ay: midY, bx: x2, by: y2 },
+  ];
+  const lens = segs.map((s) => Math.hypot(s.bx - s.ax, s.by - s.ay));
+  const total = lens[0] + lens[1] + lens[2];
+  let remaining = total * Math.min(1, progress);
+
+  c.strokeStyle = color;
+  c.beginPath();
+  c.moveTo(segs[0].ax, segs[0].ay);
+  for (let i = 0; i < segs.length && remaining > 0; i++) {
+    const s = segs[i];
+    const segLen = lens[i];
+    if (remaining >= segLen) {
+      c.lineTo(s.bx, s.by);
+      remaining -= segLen;
+    } else {
+      const t = segLen === 0 ? 0 : remaining / segLen;
+      c.lineTo(s.ax + (s.bx - s.ax) * t, s.ay + (s.by - s.ay) * t);
+      remaining = 0;
+    }
+  }
+  c.stroke();
+}
+
 /** Single generative canvas: one shared point pool that physically morphs between three
  *  layouts (neural graph / keyframe timeline / bezier path) instead of swapping graphics. */
 export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
@@ -78,6 +123,14 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
   const brandDraw = useRef({ p: 0 });
   const swatchSettleRef = useRef<number[]>([0, 0, 0, 0]);
 
+  // web-dev: build-cascade progress (0..1 over 2.6s), per-edge structure, per-node arrival
+  // alpha (flash to 1, settle to 0.6), and a whole-tree pulse fired when the last leaf lights.
+  const webDevBuildState = useRef({ p: 0 });
+  const webDevEdgesRef = useRef<WebDevEdge[]>([]);
+  const webDevHitRef = useRef<Set<number>>(new Set());
+  const webDevNodeAlphaRef = useRef<number[]>(new Array(WEB_DEV_TREE_NODE_COUNT).fill(0));
+  const webDevPulseRef = useRef({ p: 0 });
+
   const roleRef = useRef<HeroCanvasRoleId>(role);
   const sizeRef = useRef({ w: 0, h: 0 });
   const baseAnglesRef = useRef({ rx: CARD_RX_DEG, ry: CARD_RY_DEG });
@@ -88,6 +141,7 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
     "ai-video": [34, 211, 238],
     motion: [167, 139, 250],
     brand: [245, 158, 11],
+    "web-dev": [52, 211, 153],
   });
   const paletteRgbRef = useRef<Rgb[]>([
     [245, 158, 11],
@@ -103,6 +157,39 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
   function killContinuous() {
     continuousRef.current.forEach((t) => t.kill());
     continuousRef.current = [];
+  }
+
+  /** Advances the web-dev build cascade: as buildProgress crosses each node's arrival
+   *  threshold, flash it to full alpha then let it settle to 0.6 (mirrors the ai-video /
+   *  motion "hit" patterns above). Firing the last leaf triggers a whole-tree pulse. */
+  function handleWebDevBuildUpdate() {
+    const p = webDevBuildState.current.p;
+    const alphas = webDevNodeAlphaRef.current;
+    for (let i = 0; i < WEB_DEV_TREE_NODE_COUNT; i++) {
+      if (webDevHitRef.current.has(i)) continue;
+      const depth = webDevNodeDepth(i);
+      const threshold = depth === 0 ? 0 : depth / 3;
+      if (p < threshold) continue;
+      webDevHitRef.current.add(i);
+      alphas[i] = 1;
+      const obj = { v: 1 };
+      gsap.to(obj, {
+        v: 0.6,
+        duration: 0.5,
+        ease: "power2.out",
+        overwrite: "auto",
+        onUpdate: () => {
+          alphas[i] = obj.v;
+        },
+      });
+      if (i === WEB_DEV_TREE_NODE_COUNT - 1) {
+        gsap.fromTo(
+          webDevPulseRef.current,
+          { p: 1 },
+          { p: 0, duration: 0.6, ease: "power2.out", overwrite: "auto" }
+        );
+      }
+    }
   }
 
   function enterRole(roleId: HeroCanvasRoleId) {
@@ -133,6 +220,26 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
           onRepeat: () => diamondHitRef.current.clear(),
         })
       );
+    } else if (roleId === "web-dev") {
+      webDevBuildState.current.p = 0;
+      webDevPulseRef.current.p = 0;
+      webDevHitRef.current.clear();
+      webDevNodeAlphaRef.current = webDevNodeAlphaRef.current.map(() => 0);
+
+      const tl = gsap.timeline({ repeat: -1 });
+      tl.call(() => {
+        webDevHitRef.current.clear();
+        webDevNodeAlphaRef.current = webDevNodeAlphaRef.current.map(() => 0);
+      })
+        .to(webDevBuildState.current, {
+          p: 1,
+          duration: 2.6,
+          ease: "power2.inOut",
+          onUpdate: handleWebDevBuildUpdate,
+        })
+        .to({}, { duration: 1.2 }) // hold the fully-built tree before resetting
+        .set(webDevBuildState.current, { p: 0 });
+      continuousRef.current.push(tl);
     } else {
       brandDraw.current.p = 0;
       const tl = gsap.timeline({ repeat: -1 });
@@ -193,6 +300,10 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
         nearest.push(best);
       }
       nearestNodeRef.current = nearest;
+    }
+
+    if (roleId === "web-dev") {
+      webDevEdgesRef.current = webDevEdges();
     }
 
     const targets = points.map((_, i) => layout(i, n, w, h));
@@ -425,6 +536,57 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
     }
   }
 
+  function drawWebDev(c: CanvasRenderingContext2D, w: number, h: number, rgb: Rgb) {
+    const points = pointsRef.current;
+    const edges = webDevEdgesRef.current;
+    const buildP = reducedMotionRef.current ? 1 : webDevBuildState.current.p;
+    const pulseP = reducedMotionRef.current ? 0 : webDevPulseRef.current.p;
+
+    // Leftover points -> dim "</>" tick marks, well below node/edge alpha.
+    c.font = "8px ui-monospace, monospace";
+    c.textBaseline = "middle";
+    c.fillStyle = rgba(rgb, 0.15);
+    for (let i = WEB_DEV_TREE_NODE_COUNT; i < points.length; i++) {
+      const pt = points[i];
+      if (pt.role !== "idle") continue;
+      c.fillText("</>", pt.x, pt.y);
+    }
+
+    // Right-angle elbow connectors, revealed per-depth as the cascade advances.
+    c.lineWidth = 1.5;
+    const edgeColor = rgba(rgb, 0.55 + pulseP * 0.3);
+    for (let e = 0; e < edges.length; e++) {
+      const edge = edges[e];
+      const stageStart = edge.depth / 3;
+      const localP = Math.min(1, Math.max(0, (buildP - stageStart) * 3));
+      if (localP <= 0) continue;
+      const A = points[edge.from];
+      const B = points[edge.to];
+      drawElbowPartial(c, A.x, A.y, B.x, B.y, localP, edgeColor);
+    }
+
+    // Nodes — arrival flash to full alpha, settling to 0.6 (handled in handleWebDevBuildUpdate).
+    const alphas = webDevNodeAlphaRef.current;
+    for (let i = 0; i < WEB_DEV_TREE_NODE_COUNT; i++) {
+      const a = reducedMotionRef.current ? 0.6 : alphas[i] ?? 0;
+      if (a <= 0) continue;
+      const pt = points[i];
+      c.fillStyle = rgba(rgb, Math.min(1, a + pulseP * 0.4));
+      c.beginPath();
+      c.arc(pt.x, pt.y, Math.max(0.1, pt.r), 0, Math.PI * 2);
+      c.fill();
+    }
+
+    // Blinking 4x9px cursor, bottom-right — off entirely under reduced motion.
+    if (!reducedMotionRef.current) {
+      const blinkOn = Math.floor(performance.now() / 500) % 2 === 0;
+      if (blinkOn) {
+        c.fillStyle = rgba(rgb, 0.8);
+        c.fillRect(w - 14, h - 15, 4, 9);
+      }
+    }
+  }
+
   function drawFrame() {
     const c = ctxRef.current;
     const { w, h } = sizeRef.current;
@@ -434,6 +596,7 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
     const rgb = accentRgbRef.current[roleId];
     if (roleId === "ai-video") drawAiVideo(c, w, h, rgb);
     else if (roleId === "motion") drawMotion(c, w, h, rgb);
+    else if (roleId === "web-dev") drawWebDev(c, w, h, rgb);
     else drawBrand(c, w, h, rgb);
   }
 
@@ -469,6 +632,7 @@ export function RoleCanvas({ role }: { role: HeroCanvasRoleId }) {
       "ai-video": hexToRgb(resolveCssColor(ROLE_ACCENT_VAR["ai-video"])),
       motion: hexToRgb(resolveCssColor(ROLE_ACCENT_VAR.motion)),
       brand: hexToRgb(resolveCssColor(ROLE_ACCENT_VAR.brand)),
+      "web-dev": hexToRgb(resolveCssColor(ROLE_ACCENT_VAR["web-dev"])),
     };
     paletteRgbRef.current = [
       hexToRgb(resolveCssColor("--warning")),

@@ -29,6 +29,9 @@
   /* ---- Violet tints ---- */
   --violet-400: #a78bfa; /* WCAG-safe violet for small text/UI on navy (6.46:1) — --violet-600 is core-brand only */
 
+  /* ---- Emerald (4th hero role accent) ---- */
+  --emerald-400: #34d399;
+
   /* ---- Neutrals for light surfaces ---- */
   --white: #ffffff;
   --slate-100: #f1f5f9;

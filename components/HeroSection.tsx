@@ -57,6 +57,16 @@ const roles: Role[] = [
     textClass: "text-amber-400",
     bgClass: "bg-warning",
   },
+  {
+    id: "web-dev",
+    pill: "Web Dev",
+    title: "Creative Developer",
+    description:
+      "Sites and interfaces built in Next.js and React — designed, coded, animated, and shipped by the same person.",
+    image: "/images for hero/kalam-profile-04.png",
+    textClass: "text-emerald-400",
+    bgClass: "bg-emerald-400",
+  },
 ];
 
 function scrollToId(id: string) {
@@ -288,8 +298,9 @@ export default function HeroSection() {
             </AnimatePresence>
           </div>
 
-          {/* Role selector pills */}
-          <div className="mt-6 inline-flex gap-1 rounded-full border border-border bg-surface p-1">
+          {/* Role selector pills — 4 no longer fit one row below 480px; wrap to a 2x2 grid
+              there instead of shrinking text or scrolling horizontally. */}
+          <div className="mt-6 grid grid-cols-2 gap-1 rounded-2xl border border-border bg-surface p-1 min-[480px]:inline-flex min-[480px]:rounded-full">
             {roles.map((role, i) => (
               <button
                 key={role.id}
