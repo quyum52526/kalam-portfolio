@@ -264,14 +264,45 @@ export function BrandBoardSection({
           </div>
         ) : board.cardArtwork ? (
           <div className={cn("flex items-center justify-center bg-surface-inset", BLOCK_PADDING)}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- local public/ asset with a space in its folder name */}
-            <img
-              src={board.cardArtwork}
-              alt="Printed card artwork"
-              loading="lazy"
-              decoding="async"
-              className="max-h-[220px] w-full object-contain"
-            />
+            {Array.isArray(board.cardArtwork) ? (
+              // Multiple images (e.g. a presentation shot plus each individual card face): the
+              // first renders larger as the lead shot, the rest in a small side-by-side grid —
+              // generic to any count, not hardcoded to a specific number of faces.
+              <div className="flex w-full flex-col gap-2">
+                {/* eslint-disable-next-line @next/next/no-img-element -- local public/ asset with a space in its folder name */}
+                <img
+                  src={board.cardArtwork[0]}
+                  alt="Printed card artwork — presentation shot"
+                  loading="lazy"
+                  decoding="async"
+                  className="max-h-[150px] w-full object-contain"
+                />
+                {board.cardArtwork.length > 1 && (
+                  <div className="grid grid-cols-2 gap-2">
+                    {board.cardArtwork.slice(1).map((src, i) => (
+                      // eslint-disable-next-line @next/next/no-img-element -- local public/ asset with a space in its folder name
+                      <img
+                        key={src}
+                        src={src}
+                        alt={`Printed card artwork — face ${i + 1}`}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-[100px] w-full object-contain"
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element -- local public/ asset with a space in its folder name
+              <img
+                src={board.cardArtwork}
+                alt="Printed card artwork"
+                loading="lazy"
+                decoding="async"
+                className="max-h-[220px] w-full object-contain"
+              />
+            )}
           </div>
         ) : null}
         {board.rules && board.rules.length > 0 ? (

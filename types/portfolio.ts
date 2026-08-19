@@ -59,9 +59,12 @@ export interface BrandBoard {
   /** Brand-guide rules, verbatim from the PDF — not paraphrased, none added. Logo-identity
    *  boards only; omit to skip the Brand Guide block (see printSpecs for the print equivalent). */
   rules?: string[];
-  /** Print/card boards only. A single finished-artwork image (e.g. the printed card face(s)),
-   *  rendered in place of the mood-board grid when moodBoard is omitted. */
-  cardArtwork?: string;
+  /** Print/card boards only. Finished-artwork image(s), rendered in place of the mood-board grid
+   *  when moodBoard is omitted. A single string renders as one image (Reliable Pest Control); an
+   *  array renders its first entry larger (a presentation/context shot, if supplied) followed by
+   *  the rest in a small grid (individual card faces) — see Front Line Road Safety, which
+   *  supplies a combined presentation photo plus its two separate card faces. */
+  cardArtwork?: string | string[];
   /** Print/card boards only. Verbatim copy from the source mockup — not paraphrased. */
   commitment?: string;
   /** Print/card boards only. Short service/feature labels, verbatim from the source mockup. */

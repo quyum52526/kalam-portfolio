@@ -16,6 +16,11 @@ const LMT_AGRO_DIR = "/all-featured-portfolio/featurd-logo/LMT-Agro";
 // exists on disk, since Vercel deploys to a case-sensitive filesystem.
 const PEST_CONTROL_DIR = "/all-featured-portfolio/featurd-business-card/pest-control";
 
+// Folder is "Front-Line" (capital L); the files inside use "Front-line-" (lowercase l in
+// "line") — kept exactly as they exist on disk, since Vercel deploys to a case-sensitive
+// filesystem.
+const FRONT_LINE_DIR = "/all-featured-portfolio/featurd-business-card/Front-Line";
+
 const GAP_PRINT_DETAILS = [
   { label: "Printing Instruction", value: "GAP", type: "text" as const },
   { label: "Material / Paper Stock", value: "GAP", type: "text" as const },
@@ -369,6 +374,79 @@ export const brandingVisualsPage: PortfolioPage = {
             // Verbatim labels from the mockup's three icon pillars.
             servicePillars: ["INSPECTION", "PROTECTION", "INTEGRATED SOLUTIONS"],
             cardArtwork: `${PEST_CONTROL_DIR}/pest-control-business-card.jpg`,
+            printSpecs: [
+              { label: "Size", value: "3.75 in × 2.25 in" },
+              { label: "Paper", value: "300 GSM" },
+              { label: "Colour Mode", value: "CMYK" },
+              { label: "Finish", value: "Matt lamination" },
+              { label: "Coating", value: "Spot UV" },
+              { label: "Cut", value: "Round corner" },
+            ],
+          },
+        },
+        {
+          id: "front-line-road-safety",
+          title: "Front Line Road Safety",
+          thumbnail: `${FRONT_LINE_DIR}/Front-line-mockup.jpeg`,
+          details: [
+            { label: "Alternate Logo", value: "GAP", type: "image" },
+            { label: "Brand Color", value: "#F9D91E", type: "color" },
+            { label: "Typography", value: "GAP", type: "text" },
+            { label: "Complementary Background", value: "#0D0D0D", type: "color" },
+          ],
+          brandBoard: {
+            // No separate tagline text on the mockup beyond the logo's own baked-in "ROAD
+            // SAFETY" subtitle and the commitment paragraph below — same as Pest Control.
+            tagline: null,
+            hero: {
+              // Front-line-logo.svg — the only logo file: "FRONT" (yellow) + "L|NE" (grey, with
+              // a yellow divider bar) + "ROAD SAFETY" (grey), transparent background, no baked
+              // contact info.
+              image: `${FRONT_LINE_DIR}/Front-line-logo.svg`,
+              alt: "Front Line Road Safety primary logo lockup",
+            },
+            // The logo's darker grey ("L|NE", #5b6670) has weak contrast against darkestOf(
+            // palette)'s default (#4A4D4D, luminance ratio ~1.4 — close to invisible, the same
+            // failure class as Relentail/LMT Agro). Overridden to #0D0D0D, sourced directly from
+            // Front-line-business-card-front.svg's own background fill (.cls-7) rather than
+            // invented — every one of the mark's three colours clears solid contrast against it
+            // (yellow and light grey easily; the weak dark-grey case improves from ~1.4:1 to
+            // ~3.6:1). This also matches how the identity is actually presented on its real
+            // printed collateral, not just the marketing mockup's own dark gradient.
+            heroBg: "#0D0D0D",
+            // Verbatim from the mockup image's three swatches. Cross-checked against the actual
+            // SVG fills across all three source files (logo.svg, business-card-front.svg,
+            // business-card-back.svg — all consistent with each other): #ffd100, #a2a9ad,
+            // #5b6670. None of the three mockup-printed hexes are close matches this time (unlike
+            // every prior brand, where at least one swatch lined up closely) — #F9D91E vs #ffd100
+            // differ by 30 in the blue channel alone, and neither grey (#4A4D4D, #C0C0C0) is
+            // within a rounding distance of the SVGs' actual greys (#a2a9ad, #5b6670). Flagged,
+            // not reconciled; the mockup's printed values are used per the same precedent as
+            // every prior brand board.
+            palette: ["#F9D91E", "#4A4D4D", "#C0C0C0"],
+            // Verbatim from the mockup's "COMMITMENT" block (reflowed from its narrow-column
+            // line breaks into one paragraph; wording, punctuation, and the repeated word
+            // "engineered" unchanged).
+            commitment:
+              "Protecting road networks with advanced, engineered road safety systems. We analyze, we engineer, we provide engineered road environments.",
+            // Verbatim labels from the mockup's three icon pillars.
+            servicePillars: ["ROAD ASSESSMENT", "TRAFFIC PROTECTION", "INTEGRATED ROAD NETWORK SOLUTIONS"],
+            // Three images exist; presenting all three rather than dropping any. Opened each
+            // directly rather than trusting its filename — the file named "-front.svg" actually
+            // contains the CONTACT/INFO side (name, title, phone, socials, address, on a
+            // #0d0d0d background) and the file named "-back.svg" actually contains the
+            // LOGO-ONLY brand side (large wordmark + address only, on a #282828 background) —
+            // the opposite of normal business-card naming convention (front = brand face, back =
+            // contact face). Ordered here by actual content, not filename: the combined
+            // presentation photo first, then the logo-forward face (on-disk "-back.svg"), then
+            // the contact/info face (on-disk "-front.svg").
+            cardArtwork: [
+              `${FRONT_LINE_DIR}/Front-line-business-card.jpg`,
+              `${FRONT_LINE_DIR}/Front-line-business-card-back.svg`,
+              `${FRONT_LINE_DIR}/Front-line-business-card-front.svg`,
+            ],
+            // The card-face SVGs' own viewBox (270×162, i.e. 1.667:1) matches the stated trim
+            // size (3.75in × 2.25in, i.e. 1.667:1) exactly — no contradiction to flag.
             printSpecs: [
               { label: "Size", value: "3.75 in × 2.25 in" },
               { label: "Paper", value: "300 GSM" },
