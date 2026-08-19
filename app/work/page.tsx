@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { projects } from "@/data/projects";
 import { WorkTabs } from "@/components/WorkTabs";
-import { MotionVideoGrid } from "@/components/MotionVideoGrid";
+import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
+import { portfolioPages } from "@/lib/portfolio";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -27,7 +27,16 @@ export default function WorkPage() {
       </p>
 
       <div className="mt-12">
-        <MotionVideoGrid projects={projects} />
+        {portfolioPages.map((page) => (
+          <PortfolioCategorySection
+            key={page.id}
+            category={{
+              id: page.id,
+              name: page.label,
+              items: page.categories.flatMap((category) => category.items),
+            }}
+          />
+        ))}
       </div>
     </section>
   );

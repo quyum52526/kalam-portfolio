@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { workCategories, getCategoryBySlug } from "@/data/categories";
-import { projects } from "@/data/projects";
+import { getPortfolioPageBySlug } from "@/lib/portfolio";
 import { WorkTabs } from "@/components/WorkTabs";
-import { MotionVideoGrid } from "@/components/MotionVideoGrid";
+import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
+import { FlatGallery } from "@/components/portfolio/FlatGallery";
 
 type Params = { category: string };
 
@@ -39,9 +40,7 @@ export default async function WorkCategoryPage({
   const category = getCategoryBySlug(slug);
   if (!category) notFound();
 
-  const categoryProjects = projects.filter(
-    (project) => project.category === category.projectCategory
-  );
+  const portfolioPage = getPortfolioPageBySlug(slug);
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
@@ -52,9 +51,22 @@ export default async function WorkCategoryPage({
       </h1>
       <p className="mt-3 max-w-2xl text-muted">{category.description}</p>
 
-      <div className="mt-12">
-        <MotionVideoGrid projects={categoryProjects} />
-      </div>
+      {portfolioPage && (
+        <>
+          <div className="mt-12">
+            {portfolioPage.categories.map((cat) => (
+              <PortfolioCategorySection key={cat.id} category={cat} />
+            ))}
+          </div>
+
+          <div className="mt-4">
+            <h2 className="mb-6 text-xl font-semibold tracking-tight sm:text-2xl">
+              All {category.label} Work
+            </h2>
+            <FlatGallery items={portfolioPage.allWork} />
+          </div>
+        </>
+      )}
     </section>
   );
 }

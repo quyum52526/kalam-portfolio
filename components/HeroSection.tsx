@@ -94,6 +94,17 @@ export default function HeroSection() {
   const PORTRAIT_MIN_H = 420;
   const PORTRAIT_MAX_H = 820;
 
+  // Shaves this many px of empty space off the BOTTOM of the hero (reduces the section's
+  // min-height) to close the dead space below the CTA row. The portrait's bottom edge is
+  // anchored to the section's bottom edge (see updatePortraitSizing below), so this trim moves
+  // the portrait up too — same lever, both effects. It's a pure upward TRANSLATION (portrait
+  // height stays pinned at PORTRAIT_MAX_H) only while this value stays under the current
+  // per-viewport headroom: sectionHeight - HEAD_GAP_TARGET - PORTRAIT_MAX_H (≈30px at a
+  // 1440x900 viewport, measured 2026-08-19). Push it past that headroom and the portrait starts
+  // shrinking to fit instead of just moving, because both numbers come from the same
+  // sectionBottom measurement. Tune this directly — no other code needs to change.
+  const HERO_BOTTOM_TRIM = 28;
+
   const sectionRef = useRef<HTMLElement>(null);
   const portraitTrackRef = useRef<HTMLDivElement>(null);
 
@@ -167,7 +178,8 @@ export default function HeroSection() {
         }
       }}
       ref={sectionRef}
-      className="relative min-h-svh overflow-hidden py-12"
+      style={{ minHeight: `calc(100svh - ${HERO_BOTTOM_TRIM}px)` }}
+      className="relative overflow-hidden py-12"
     >
       <motion.div
         aria-hidden
