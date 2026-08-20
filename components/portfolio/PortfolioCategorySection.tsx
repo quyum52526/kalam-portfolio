@@ -19,12 +19,13 @@ export function PortfolioCategorySection({
       <h2 className="mb-6 text-xl font-semibold tracking-tight sm:text-2xl">
         {category.name}
       </h2>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {category.items.map((item) => (
           <ItemCard
             key={item.id}
             item={item}
             onOpenDetails={() => setSelected(item)}
+            aspectRatio={category.aspectRatio}
           />
         ))}
       </div>

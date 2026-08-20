@@ -31,6 +31,9 @@ const DALLAS_DIR = "/all-featured-portfolio/featurd-business-card/dallas";
 // listing, not assumed. Kept exactly as-is per instruction rather than silently renamed.
 const DALLAS_BACK_PNG = `${DALLAS_DIR}/dallas-business-carddallas-business-card-back.png`;
 
+const T_SHIRT_DIFFERENT_DIR = "/all-featured-portfolio/T-shirt/Different";
+const T_SHIRT_MY_CITY_DIR = "/all-featured-portfolio/T-shirt/my-city-my-kicks";
+
 const GAP_PRINT_DETAILS = [
   { label: "Printing Instruction", value: "GAP", type: "text" as const },
   { label: "Material / Paper Stock", value: "GAP", type: "text" as const },
@@ -582,26 +585,164 @@ export const brandingVisualsPage: PortfolioPage = {
     {
       id: "t-shirt-design",
       name: "T-Shirt Design",
+      // Garment photos are portrait — the default 1:1 square would crop them top/bottom. Both
+      // items below now have a brandBoard, so ItemCard renders both with object-contain (not
+      // object-cover) — neither thumbnail gets cropped, only letterboxed if its real ratio isn't
+      // exactly 4:5 (my-city-my-kicks-mockup.jpg is 1728x2442, ~0.708 — it'll letterbox left/
+      // right by ~5.8% each side; T-shirt-mockup.png is exactly 4:5, so it fills edge to edge).
+      aspectRatio: "4/5",
       items: [
         {
-          id: "tshirt-design-01",
-          title: "T-Shirt Design 01",
-          thumbnail: "/Graphics/t-shirt-01.png",
+          id: "my-city-my-kicks-tshirt",
+          title: "My City My Kicks",
+          thumbnail: `${T_SHIRT_MY_CITY_DIR}/my-city-my-kicks-mockup.jpg`,
           details: [
-            { label: "Print Method", value: "GAP", type: "text" },
-            { label: "Fabric Color", value: "GAP", type: "color" },
-            { label: "Variations", value: "GAP", type: "image" },
+            { label: "Print Method", value: "Screen print", type: "text" },
+            { label: "Fabric Color", value: "#F26722", type: "color" },
+            {
+              label: "Variations",
+              value: [`${T_SHIRT_MY_CITY_DIR}/my-city-my-kicks.svg`],
+              type: "image",
+            },
           ],
+          brandBoard: {
+            tagline: null,
+            heroLayout: "photo",
+            hero: {
+              image: `${T_SHIRT_MY_CITY_DIR}/my-city-my-kicks-mockup.jpg`,
+              alt: '"My City My Kicks" t-shirt design on white and black tees, hanging',
+            },
+            // my-city-my-kicks.svg is a real, drawable file (27 flat-filled <path> elements,
+            // no gradients/embedded images) — used directly, no PNG fallback needed. It has no
+            // <text>/<tspan>/font-family at all: every letterform was converted to outline
+            // paths before export, so there's no embedded-font risk (nothing depends on a
+            // font being available) and, for the same reason, no live text node to read the
+            // wording from — "CHATTOGRAM" / "my city my kicks" is read off the rendered
+            // artwork, confirmed consistent across the flat art and both mockup shirts.
+            secondaryImage: {
+              label: "Garment Preview",
+              // T-shirt-template.png here is byte-identical (checksum-verified) to the one in
+              // the "Different" folder — still blank, no artwork composited. Reusing the hero
+              // mockup photo again, same as "Different".
+              image: `${T_SHIRT_MY_CITY_DIR}/my-city-my-kicks-mockup.jpg`,
+              alt: '"My City My Kicks" design on a white tee, detail view',
+            },
+            // Hex values extracted from the SVG's own fill="" attributes (grep'd, not
+            // eyeballed): #F26722 orange (16 of 27 paths — "CHATTOGRAM" + script text),
+            // #010101 near-black (9 paths — skyline), #231F20 a second, very slightly
+            // different near-black (1 path), #5EC7D0 teal (1 path — shoe accent stripe).
+            // Unlike "Different", only one flat-artwork file was supplied here — no separate
+            // dark-garment (white-ink) SVG/PNG exists, so these 4 hexes cover the light-garment
+            // colourway only. The white-ink dark-garment version is visible in the mockup photo
+            // (both shirts show the same teal accent; the headline/skyline/script switch from
+            // orange+black to white) but isn't a separate sampleable file, so it's described in
+            // the copy below rather than added here as an unverified swatch.
+            palette: ["#F26722", "#010101", "#231F20", "#5EC7D0"],
+            designSpecs: {
+              label: "Design Details",
+              items: [
+                { label: "Design Name", value: "My City My Kicks" },
+                { label: "Garment Colours", value: "Black, White" },
+                { label: "Orientation", value: "Portrait (1:1.41)" },
+                { label: "Typography", value: "Bold western slab + brush script" },
+              ],
+            },
+            description: {
+              label: "Design Details",
+              body: 'A hometown streetwear graphic pairing "CHATTOGRAM" — set in a bold, ribboned western display face — with a hand-drawn harbour skyline (a tower with an observation deck, port cranes) silhouetted over a stylized sneaker outline in a constant teal accent stripe. "my city my kicks" runs beneath in a loose brush script. On light garments the print runs orange (headline + script) and black (skyline); on dark garments the headline, skyline, and script all switch to white while the teal accent stays the same.',
+            },
+            cardArtwork: `${T_SHIRT_MY_CITY_DIR}/my-city-my-kicks.svg`,
+            // Print method, placement, print size, and DPI are not verifiable from the
+            // supplied assets — reasonable working values, not confirmed production specs,
+            // mirroring "Different"'s (near-identical artwork proportions: viewBox ratio
+            // ~0.707 here vs ~0.708 there). Garment Colour Guidance is the one row here that
+            // IS fact, derived from the SVG palette above plus the mockup photo.
+            printSpecs: [
+              { label: "Print Method", value: "Screen print" },
+              { label: "Placement", value: "Full front, chest–torso" },
+              { label: "Print Size", value: "≈11 in × 15.5 in" },
+              {
+                label: "Garment Colour Guidance",
+                value: "Orange/black print on light garments · white print on dark garments (teal accent unchanged)",
+              },
+            ],
+          },
         },
         {
-          id: "tshirt-design-02",
-          title: "T-Shirt Design 02",
-          thumbnail: "/Graphics/t-shirt-02.jpg",
+          id: "different-tshirt",
+          title: "Different",
+          thumbnail: `${T_SHIRT_DIFFERENT_DIR}/T-shirt-mockup.png`,
           details: [
-            { label: "Print Method", value: "GAP", type: "text" },
-            { label: "Fabric Color", value: "GAP", type: "color" },
-            { label: "Variations", value: "GAP", type: "image" },
+            { label: "Print Method", value: "Screen print", type: "text" },
+            { label: "Fabric Color", value: "#000000", type: "color" },
+            {
+              label: "Variations",
+              value: [
+                `${T_SHIRT_DIFFERENT_DIR}/Different-black.png`,
+                `${T_SHIRT_DIFFERENT_DIR}/Different-white.png`,
+              ],
+              type: "image",
+            },
           ],
+          brandBoard: {
+            tagline: null,
+            heroLayout: "photo",
+            hero: {
+              image: `${T_SHIRT_DIFFERENT_DIR}/T-shirt-mockup.png`,
+              alt: '"Different" t-shirt design on white and black tees, hanging',
+            },
+            // Different-black.svg / Different-white.svg are both empty stub exports —
+            // <svg viewBox="0 0 595.276 841.89"/>, zero drawable content, confirmed by
+            // opening them directly. PNGs used for both artwork slots below instead.
+            secondaryImage: {
+              label: "Garment Preview",
+              // T-shirt-template.png (the "blank template" asset) has no artwork composited
+              // on it — opened directly, both shirts are bare, no design applied. There's no
+              // separate rendered "design on a white tee" asset distinct from the hero photo,
+              // so the same mockup photo is reused here; it already shows the design applied
+              // to a white tee (the left-hand shirt in that shot).
+              image: `${T_SHIRT_DIFFERENT_DIR}/T-shirt-mockup.png`,
+              alt: '"Different" design on a white tee, detail view',
+            },
+            // Ink colours extracted by sampling raw pixel data (via sharp), not eyeballed —
+            // the SVGs that would normally be the palette source are empty. Different-black.png:
+            // #000000 covers 15.76% of the canvas (343,067px). Different-white.png: #FFFFFF
+            // covers 15.70% (341,726px), plus a small #000000 accent at 0.03% (760px, the
+            // vertical "others" word). Both files share an identical #FFF400 yellow
+            // corner-bracket accent — the exact same pixel count (59,018px) in both files,
+            // confirming it's the same shape/position, only the main ink recoloured.
+            palette: ["#000000", "#FFFFFF", "#FFF400"],
+            designSpecs: {
+              label: "Design Details",
+              items: [
+                { label: "Design Name", value: "Different" },
+                { label: "Garment Colours", value: "Black, White" },
+                { label: "Orientation", value: "Portrait (1:1.41)" },
+                { label: "Typography", value: "Bold italic display + grotesque sans" },
+              ],
+            },
+            description: {
+              label: "Design Details",
+              body: 'A typographic streetwear graphic built around the word "Different" — set twice, once inside a rough diagonal-hatch stamp and once in a clean yellow-bordered box — bridging a short manifesto line at the top with the bold call-out "INSPIRES" at the bottom. Yellow corner-bracket rules frame the composition, echoing gig-poster and zine layouts. Ink swaps from black (on light garments) to white (on dark garments); the yellow accent and layout stay identical across both.',
+            },
+            cardArtwork: [
+              `${T_SHIRT_DIFFERENT_DIR}/Different-black.png`,
+              `${T_SHIRT_DIFFERENT_DIR}/Different-white.png`,
+            ],
+            // Print method, placement, print size, and DPI are not verifiable from the
+            // supplied assets — reasonable working values, not confirmed production specs.
+            // Garment Colour Guidance is the one row here that IS fact, derived directly from
+            // the pixel analysis above.
+            printSpecs: [
+              { label: "Print Method", value: "Screen print" },
+              { label: "Placement", value: "Full front, chest–torso" },
+              { label: "Print Size", value: "≈11 in × 15.5 in" },
+              {
+                label: "Garment Colour Guidance",
+                value: "Black ink on light garments · white ink on dark garments",
+              },
+            ],
+          },
         },
       ],
     },

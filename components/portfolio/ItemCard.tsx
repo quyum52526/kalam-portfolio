@@ -5,27 +5,45 @@ function hasRealThumbnail(thumbnail: string) {
   return Boolean(thumbnail) && thumbnail !== "GAP";
 }
 
+/** Static literal classes only — Tailwind's build-time scanner greps source text for literal
+ *  utility names, so an interpolated `aspect-[${x}]` wouldn't be found and its CSS would never
+ *  be generated (same constraint BrandBoardSection documents for its own aspect box). */
+const ASPECT_RATIO_CLASS: Record<"1/1" | "4/5" | "16/9" | "9/16", string> = {
+  "1/1": "aspect-square",
+  "4/5": "aspect-[4/5]",
+  "16/9": "aspect-video",
+  "9/16": "aspect-[9/16]",
+};
+
 export function ItemCard({
   item,
   onOpenDetails,
+  aspectRatio = "1/1",
 }: {
   item: PortfolioItem;
   onOpenDetails: () => void;
+  /** Card image area's aspect ratio — set per-group by the caller (PortfolioCategorySection),
+   *  driven by data/portfolio/*.ts's `category.aspectRatio`. Defaults to the existing 1:1 square
+   *  so any caller that doesn't pass this renders exactly as before. */
+  aspectRatio?: "1/1" | "4/5" | "16/9" | "9/16";
 }) {
-  // Brand-board mockup thumbnails (DigiCode IT, RF-TEQ, and future brands) are wide
-  // presentation graphics with readable content near the edges (a "VISION" heading,
-  // colour-swatch labels, etc.) — cropping them to fill the square tile can cut that
-  // content off, as it did for DigiCode's 500x400 (1.25:1) mockup. object-contain keeps
-  // the whole image visible regardless of its aspect ratio, which matters since this
-  // library will keep growing with brands whose mockup dimensions aren't known yet.
-  // Plain logo/product thumbnails (Castel, LMT Agro, business cards, etc.) keep the
-  // existing fill-and-crop look, unchanged — the tile's own bg-surface-inset already
-  // shows through as the letterbox fill, so no extra styling is needed for that either.
+  // Brand-board thumbnails (DigiCode IT, RF-TEQ, and future brands) are curated presentation
+  // graphics with readable content near the edges (a "VISION" heading, colour-swatch labels,
+  // etc.) — cropping them to fill the tile can cut that content off, as it did for DigiCode's
+  // 500x400 (1.25:1) mockup. object-contain keeps the whole image visible regardless of its
+  // aspect ratio, which matters since this library will keep growing with brands whose mockup
+  // dimensions aren't known yet.
+  // Video thumbnails (YouTube reels) are the opposite case: they're conventionally always
+  // crop-safe (every video platform crops its own thumbnail grid — subjects are framed with
+  // that in mind), and YouTube's own stored thumbnail for a vertical Short is a 16:9 canvas
+  // with the real 9:16 frame pillarboxed — object-contain would show that letterboxing/blur
+  // fill inside a 9:16 card instead of cropping down to the real content, so video items use
+  // the plain fill-and-crop path below, same as flat logo/product thumbnails.
   const isBrandBoardMockup = Boolean(item.brandBoard);
 
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-border bg-surface">
-      <div className="relative aspect-square w-full bg-surface-inset">
+      <div className={cn("relative w-full bg-surface-inset", ASPECT_RATIO_CLASS[aspectRatio])}>
         {hasRealThumbnail(item.thumbnail) ? (
           // eslint-disable-next-line @next/next/no-img-element -- thumbnails may be remote (e.g. YouTube) URLs
           <img
@@ -51,10 +69,13 @@ export function ItemCard({
             engages when content would otherwise overflow. min-w-0 lets the paragraph actually
             shrink within the flex row instead of pushing against the Details button. */}
         <p className="line-clamp-2 min-w-0 text-sm font-medium">{item.title}</p>
+        {/* py-3.5 (was py-1) brings the tappable height to 46px (>=44px minimum);
+            -my-2.5 cancels the added padding in the margin box so the footer row's
+            own height stays the same as before. */}
         <button
           type="button"
           onClick={onOpenDetails}
-          className="shrink-0 rounded-full border border-border-strong px-3 py-1 text-xs font-medium text-text-body transition-colors hover:bg-surface-card"
+          className="-my-2.5 shrink-0 rounded-full border border-border-strong px-3 py-3.5 text-xs font-medium text-text-body transition-colors hover:bg-surface-card"
         >
           Details
         </button>

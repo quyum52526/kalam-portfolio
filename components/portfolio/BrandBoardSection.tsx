@@ -43,23 +43,35 @@ import { cn } from "@/lib/utils";
  *  logo's own intrinsic ratio. */
 const HERO_LOCKUP_CLASS =
   "w-[86%] max-w-[520px] h-auto aspect-[840/225] object-contain";
+/** Hero box for a portrait product/garment PHOTO (apparel boards, `heroLayout: "photo"`) — the
+ *  840:225 wide-strip ratio above is tuned for horizontal logo lockups and would badly
+ *  letterbox a tall photo. object-contain (not cover) so a photo whose real ratio isn't exactly
+ *  4:5 never gets cropped — it letterboxes instead, showing the hero band's own background in
+ *  the gap. "Different"'s T-shirt-mockup.png (1080x1350) happens to BE exactly 4:5, so contain
+ *  and cover render pixel-identical there (no discrepancy to resolve, nothing to crop or
+ *  letterbox); "My City My Kicks"'s mockup (1728x2442, ratio ~0.708) is where this matters —
+ *  cover would have cropped ~5.8% off its top and bottom. */
+const HERO_PHOTO_CLASS = "w-[70%] max-w-[320px] h-auto aspect-[4/5] object-contain";
 /** Hero band's own padding — still shrinks along with everything else. */
 const HERO_BAND_PADDING = "px-6 py-5";
 
-/** Padding inside every secondary block (logo options, fonts, mood/guide). */
-const BLOCK_PADDING = "px-3 py-2.5";
+/** Padding inside every secondary block (logo options, fonts, mood/guide). Exported so other
+ *  board-style components (e.g. VideoBoardSection) share the exact same density instead of
+ *  redeclaring their own spacing scale. */
+export const BLOCK_PADDING = "px-3 py-2.5";
 /** Colour-swatch strip's vertical padding (was py-3). */
 const SWATCH_PADDING = "py-1.5";
 
-/** Section-label / eyebrow text (LOGO OPTIONS, thumbnail captions, hex codes). */
-const SECTION_LABEL_CLASS =
+/** Section-label / eyebrow text (LOGO OPTIONS, thumbnail captions, hex codes). Exported — see
+ *  BLOCK_PADDING. */
+export const SECTION_LABEL_CLASS =
   "text-[8px] font-medium uppercase tracking-[0.12em] text-muted";
 /** Font-specimen family name (e.g. "Montserrat"). */
 const SPECIMEN_NAME_CLASS = "text-sm font-semibold text-text-body";
-/** Brand-guide heading ("Brand Guide"). */
-const GUIDE_HEADING_CLASS = "text-xs font-semibold text-text-body";
-/** Brand-guide bulleted rules — body copy. */
-const GUIDE_BODY_CLASS = "text-[10px] leading-snug text-text-body";
+/** Brand-guide heading ("Brand Guide"). Exported — see BLOCK_PADDING. */
+export const GUIDE_HEADING_CLASS = "text-xs font-semibold text-text-body";
+/** Brand-guide bulleted rules — body copy. Exported — see BLOCK_PADDING. */
+export const GUIDE_BODY_CLASS = "text-[10px] leading-snug text-text-body";
 
 /** Logo-option thumbnail box size (was h-16 w-16). */
 const LOGO_THUMB_SIZE = "h-11 w-11";
@@ -137,7 +149,11 @@ export function BrandBoardSection({
         style={{ backgroundColor: heroBg }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- local public/ asset with a space in its folder name */}
-        <img src={board.hero.image} alt={board.hero.alt} className={HERO_LOCKUP_CLASS} />
+        <img
+          src={board.hero.image}
+          alt={board.hero.alt}
+          className={board.heroLayout === "photo" ? HERO_PHOTO_CLASS : HERO_LOCKUP_CLASS}
+        />
         {board.tagline !== null && (
           <p
             className="text-[9px] font-medium uppercase tracking-[0.25em]"
@@ -148,14 +164,41 @@ export function BrandBoardSection({
         )}
       </div>
 
-      {/* Row 1.5 — Commitment. Print/card boards only (e.g. Reliable Pest Control's verbatim
-          mockup copy) — logo-identity boards don't set this and render nothing here. */}
-      {board.commitment && (
+      {/* Row 1.25 — Secondary image. Apparel/product boards only (e.g. a garment-preview shot
+          distinct from the hero) — every other board type omits this and renders nothing here. */}
+      {board.secondaryImage && (
+        <div className={cn("border-t border-border bg-surface-inset", BLOCK_PADDING)}>
+          <p className={cn(SECTION_LABEL_CLASS, "text-text-accent")}>
+            {board.secondaryImage.label}
+          </p>
+          {/* eslint-disable-next-line @next/next/no-img-element -- local public/ asset with a space in its folder name; matches every other image in this component */}
+          <img
+            src={board.secondaryImage.image}
+            alt={board.secondaryImage.alt}
+            loading="lazy"
+            decoding="async"
+            className="mt-1.5 max-h-[220px] w-full object-contain"
+          />
+        </div>
+      )}
+
+      {/* Row 1.5 — Commitment (print/card boards, e.g. Reliable Pest Control's verbatim mockup
+          copy) or Description (apparel/product boards — same slot/style, caller-supplied label
+          since "Commitment" doesn't fit a design-details blurb). Mutually exclusive; boards that
+          set neither render nothing here. */}
+      {board.commitment ? (
         <div className={cn("border-t border-border", BLOCK_PADDING)}>
           <p className={cn(SECTION_LABEL_CLASS, "text-text-accent")}>Commitment</p>
           <p className={cn(GUIDE_BODY_CLASS, "mt-1")}>{board.commitment}</p>
         </div>
-      )}
+      ) : board.description ? (
+        <div className={cn("border-t border-border", BLOCK_PADDING)}>
+          <p className={cn(SECTION_LABEL_CLASS, "text-text-accent")}>
+            {board.description.label}
+          </p>
+          <p className={cn(GUIDE_BODY_CLASS, "mt-1")}>{board.description.body}</p>
+        </div>
+      ) : null}
 
       {/* Row 2 — Logo options (45%) | Palette (55%), flush against each other, when logoOptions
           exists. Print/card boards omit logoOptions entirely (no "logo options" concept for a
@@ -194,6 +237,27 @@ export function BrandBoardSection({
           ))}
         </div>
       </div>
+
+      {/* Row 2.25 — Design specs. Apparel/product boards only — a second labelled spec list,
+          dl-styled identically to Row 4's Print Specifications block but kept separate since it
+          describes the design itself (garment colours, orientation, typography), not
+          production/printing. */}
+      {board.designSpecs && board.designSpecs.items.length > 0 && (
+        <div className={cn("border-t border-border bg-surface-inset", BLOCK_PADDING)}>
+          <p className={GUIDE_HEADING_CLASS}>{board.designSpecs.label}</p>
+          <dl className="mt-1.5 space-y-1">
+            {board.designSpecs.items.map((spec) => (
+              <div
+                key={spec.label}
+                className="flex items-baseline justify-between gap-2 border-b border-border/60 py-0.5 last:border-b-0"
+              >
+                <dt className={cn(SECTION_LABEL_CLASS, "text-text-accent")}>{spec.label}</dt>
+                <dd className="text-[11px] font-semibold text-text-body">{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )}
 
       {/* Row 2.5 — Service pillars. Print/card boards only. */}
       {board.servicePillars && board.servicePillars.length > 0 && (

@@ -40,6 +40,10 @@ export interface BrandBoard {
    *  Logo-01.svg includes "ENDURE THE CURRENT" in the artwork itself). */
   tagline: string | null;
   hero: { image: string; alt: string };
+  /** "photo" swaps the hero box to a 4:5 portrait crop suited to a real product/garment
+   *  photograph. Omit (defaults to the wide 840:225 logo-lockup box) for every existing board —
+   *  unchanged for logo-identity and print/card boards, which all use vector/flat lockups. */
+  heroLayout?: "photo";
   /** Hero band background colour override. Omit to fall back to the darkest palette entry (by
    *  relative luminance) — the existing default, unchanged for any brand that doesn't set this.
    *  Set explicitly when a brand's mark fills its ink with that same darkest palette colour,
@@ -72,6 +76,53 @@ export interface BrandBoard {
   /** Print/card boards only. Rendered as a labelled spec list in place of the Brand Guide block
    *  when rules is omitted. */
   printSpecs?: BrandBoardPrintSpec[];
+  /** Apparel/product boards only. A generic labelled paragraph, rendered in the same slot and
+   *  style as `commitment` but with a caller-supplied label instead of the fixed "Commitment"
+   *  heading (that word doesn't fit a design-details blurb). Mutually exclusive with
+   *  `commitment` — a board sets one or the other, never both. */
+  description?: { label: string; body: string };
+  /** Apparel/product boards only. A second contextual image (e.g. the design on a garment),
+   *  distinct from the hero shot. Renders directly below the hero band, above everything else. */
+  secondaryImage?: { label: string; image: string; alt: string };
+  /** Apparel/product boards only. A second labelled spec list, distinct from `printSpecs` (which
+   *  stays reserved for print/production specs) — e.g. design attributes like garment colours,
+   *  orientation, typography. Renders as its own row, dl-styled identically to printSpecs. */
+  designSpecs?: { label: string; items: BrandBoardPrintSpec[] };
+}
+
+export interface VideoSpec {
+  label: string;
+  value: string;
+}
+
+/** AI & Generative (and any future video-led) items only. A YouTube reel's fixed field set:
+ *  click-to-play player, overview, a spec list, a pipeline/tools list, and an outbound "Watch
+ *  on YouTube" link. Kept as its own type/component rather than folded into BrandBoard — a
+ *  video reel isn't a "brand board" (no palette/lockup concept applies), and the player needs
+ *  real interactive state (click-to-play), which BrandBoardSection's boards never have. */
+export interface VideoBoard {
+  /** YouTube video ID only (not a full URL) — used to build both the nocookie embed src and,
+   *  combined with youtubeUrl below, kept separate so the embed domain can change independently
+   *  of the canonical watch link. */
+  videoId: string;
+  /** Real title from the YouTube oEmbed API — used as the iframe's title attribute and the
+   *  play-facade's alt/aria-label text. */
+  videoTitle: string;
+  /** Facade thumbnail shown before the user clicks play — the real YouTube thumbnail. */
+  thumbnail: string;
+  overview: string;
+  specs: VideoSpec[];
+  /** Tools/workflow steps, rendered as a bulleted list. */
+  pipeline: string[];
+  /** "portrait" swaps the player from the default width-driven 16:9 box to a height-driven 9:16
+   *  box (capped, centered) suited to a vertical Short — a full-width 9:16 box at this modal's
+   *  width would render ~1350px tall, well past a typical viewport. Omit (defaults to
+   *  "landscape") for every existing video item. */
+  orientation?: "landscape" | "portrait";
+  /** Canonical https://youtu.be/... or https://www.youtube.com/watch?v=... link for the
+   *  "Watch on YouTube" outbound link — deliberately not derived from videoId at render time,
+   *  so a future item can point at a URL shape the ID alone wouldn't reconstruct. */
+  youtubeUrl: string;
 }
 
 export interface PortfolioItem {
@@ -83,6 +134,9 @@ export interface PortfolioItem {
   /** Optional richer brand-board view (hero lockup, logo options, mood board, palette, fonts,
    *  rules) — DetailsModal renders this in addition to `details` when present. */
   brandBoard?: BrandBoard;
+  /** Optional video-reel view (player, overview, specs, pipeline, watch link). Mutually
+   *  exclusive with `brandBoard` — DetailsModal checks videoBoard first. */
+  videoBoard?: VideoBoard;
 }
 
 export interface PortfolioCategory {
@@ -90,6 +144,12 @@ export interface PortfolioCategory {
   /** Shown as the section heading, e.g. "Logo Design". */
   name: string;
   items: PortfolioItem[];
+  /** Card image area's aspect ratio for this group only. Omit for the default (1:1, square) —
+   *  every existing group keeps that unless it explicitly opts in, e.g. T-Shirt Design's "4/5"
+   *  for portrait garment photos, AI Video's "16/9" for video thumbnails, Short-Form Reels'
+   *  "9/16" for vertical Shorts. Driven by data, not the group's name/id, so any future group
+   *  can opt in the same way. */
+  aspectRatio?: "1/1" | "4/5" | "16/9" | "9/16";
 }
 
 /** Matches data/categories.ts workCategories[].slug — the real /work/[category] routes. */
