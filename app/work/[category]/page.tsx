@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { workCategories, getCategoryBySlug } from "@/data/categories";
-import { getPortfolioPageBySlug } from "@/lib/portfolio";
 import { WorkTabs } from "@/components/WorkTabs";
-import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
-import { FlatGallery } from "@/components/portfolio/FlatGallery";
+import { CategoryPageContent } from "@/components/portfolio/CategoryPageContent";
 
 type Params = { category: string };
 
@@ -40,33 +38,11 @@ export default async function WorkCategoryPage({
   const category = getCategoryBySlug(slug);
   if (!category) notFound();
 
-  const portfolioPage = getPortfolioPageBySlug(slug);
-
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <WorkTabs activeSlug={category.slug} />
 
-      <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-        {category.label}
-      </h1>
-      <p className="mt-3 max-w-2xl text-muted">{category.description}</p>
-
-      {portfolioPage && (
-        <>
-          <div className="mt-12">
-            {portfolioPage.categories.map((cat) => (
-              <PortfolioCategorySection key={cat.id} category={cat} />
-            ))}
-          </div>
-
-          <div className="mt-4">
-            <h2 className="mb-6 text-xl font-semibold tracking-tight sm:text-2xl">
-              All {category.label} Work
-            </h2>
-            <FlatGallery items={portfolioPage.allWork} />
-          </div>
-        </>
-      )}
+      <CategoryPageContent slug={category.slug} />
     </section>
   );
 }

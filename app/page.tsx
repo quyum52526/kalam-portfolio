@@ -1,6 +1,6 @@
 import HeroSection from "@/components/HeroSection";
-import BentoGrid from "@/components/BentoGrid";
 import { FeaturedReel } from "@/components/FeaturedReel";
+import { HomeFeaturedWork } from "@/components/HomeFeaturedWork";
 import { MarqueeTicker } from "@/components/MarqueeTicker";
 import StatsSection from "@/components/StatsSection";
 
@@ -15,7 +15,7 @@ export default function Home() {
 
       <FeaturedReel />
 
-      <BentoGrid />
+      <HomeFeaturedWork />
     </>
   );
 }

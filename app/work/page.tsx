@@ -1,7 +1,25 @@
 import type { Metadata } from "next";
+import type { PortfolioPageId } from "@/types/portfolio";
 import { WorkTabs } from "@/components/WorkTabs";
-import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
+import { getCategoryBySlug } from "@/data/categories";
+import { HomeCategoryFeature } from "@/components/portfolio/HomeCategoryFeature";
 import { portfolioPages } from "@/lib/portfolio";
+
+/** Section order for this page only — deliberately not the same order as
+ *  data/categories.ts / lib/portfolio.ts's portfolioPages, which also drives the
+ *  homepage's featured blocks (kept in AI & Generative-first order there). Chip order
+ *  (WorkTabs) and /work/[category] routes both come from data/categories.ts directly
+ *  and are unaffected by this list. */
+const ALL_TAB_ORDER: PortfolioPageId[] = [
+  "branding-visuals",
+  "ai-generative",
+  "motion-reels",
+  "web-experiences",
+];
+
+const orderedPortfolioPages = ALL_TAB_ORDER.map((id) =>
+  portfolioPages.find((page) => page.id === id)
+).filter((page) => page !== undefined);
 
 export const metadata: Metadata = {
   title: "Work",
@@ -27,16 +45,16 @@ export default function WorkPage() {
       </p>
 
       <div className="mt-12">
-        {portfolioPages.map((page) => (
-          <PortfolioCategorySection
-            key={page.id}
-            category={{
-              id: page.id,
-              name: page.label,
-              items: page.categories.flatMap((category) => category.items),
-            }}
-          />
-        ))}
+        {orderedPortfolioPages.map((page) => {
+          const category = getCategoryBySlug(page.id);
+          if (!category) return null;
+
+          const items = page.categories.flatMap((c) => c.items);
+
+          return (
+            <HomeCategoryFeature key={page.id} category={category} items={items} />
+          );
+        })}
       </div>
     </section>
   );
