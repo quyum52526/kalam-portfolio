@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 270 162">
+  <defs>
+    <clipPath id="clippath">
+      <rect width="270" height="162" rx="11.049" ry="11.049" fill="none"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#clippath)">
+    <rect x="54" y="-54" width="162" height="270" rx="10.762" ry="10.762" transform="translate(216 -54) rotate(90)" fill="#fff"/>
+    <g>
+      <path d="M25.372,126.373c-.727-.727-1.727-1.173-2.827-1.173-1.107,0-2.107.447-2.833,1.173-.72.72-1.167,1.72-1.167,2.827,0,2.207,1.787,4,4,4,1.1,0,2.1-.447,2.827-1.173.727-.72,1.173-1.72,1.173-2.827s-.447-2.107-1.173-2.827ZM23.659,127.627h-.527c-.187,0-.227.08-.227.267v.467h.753l-.073.82h-.68v2.433h-.973v-2.427h-.507v-.827h.507v-.653c0-.607.327-.927,1.053-.927h.673v.847Z" fill="#2f7c3e"/>
+      <path d="M22.545,113.655c-2.209,0-4,1.791-4,4s1.791,4,4,4,4-1.791,4-4-1.791-4-4-4ZM25.045,117.905c0,.551-.449,1-1,1-.302,0-.57-.137-.753-.35-.178.219-.436.35-.747.35-.589,0-1-.463-1-1.125s.411-1.125,1-1.125c.198,0,.372.056.522.15.038-.088.126-.15.228-.15.138,0,.25.112.25.25v1c0,.276.224.5.5.5s.5-.224.5-.5v-.146c0-1.063-.745-1.959-1.733-2.087-.656-.084-1.288.142-1.734.622-.445.48-.624,1.132-.49,1.788.152.741.749,1.352,1.484,1.519.471.107.941.054,1.358-.154.124-.061.273-.011.335.113.061.124.01.274-.113.336-.347.172-.722.26-1.107.26-.194,0-.389-.022-.586-.067-.937-.213-1.668-.961-1.862-1.906-.167-.816.056-1.628.613-2.228.558-.6,1.346-.882,2.164-.778,1.236.16,2.168,1.271,2.168,2.583v.146Z" fill="#2f7c3e"/>
+      <g>
+        <path d="M23.201,139.693c0,.356-.288.644-.644.644s-.644-.288-.644-.644.288-.644.644-.644.644.288.644.644h0ZM23.201,139.693" fill="#2f7c3e"/>
+        <path d="M22.545,136.745c-2.209,0-4,1.791-4,4s1.791,4,4,4,4-1.791,4-4-1.791-4-4-4h0ZM22.537,138.576s.006,0,.008,0c.003,0,.005,0,.008,0,.674.011,1.222.568,1.222,1.242,0,.824-.881,1.659-1.231,1.958-.023-.02-.049-.043-.077-.067,0,0,0,0-.001-.001-.387-.344-1.152-1.121-1.152-1.889,0-.674.548-1.231,1.222-1.242h0ZM22.563,142.938c-.738,0-1.485-.212-1.485-.616,0-.284.368-.472.842-.56.092.092.179.173.255.241-.516.058-.82.221-.82.319,0,.12.458.339,1.208.339s1.208-.22,1.208-.339c0-.099-.316-.267-.851-.322.077-.069.164-.151.257-.244.488.085.871.276.871.565,0,.404-.747.616-1.485.616h0ZM22.563,142.938" fill="#2f7c3e"/>
+      </g>
+      <g>
+        <circle cx="22.551" cy="108.186" r=".327" fill="#2f7c3e"/>
+        <rect x="21.472" y="103.913" width="2.148" height="3.693" rx=".184" ry=".184" fill="#2f7c3e"/>
+        <path d="M22.545,102.11c-2.205,0-3.997,1.792-3.997,3.997s1.792,4.003,3.997,4.003,3.997-1.792,3.997-4.003-1.786-3.997-3.997-3.997ZM24.125,108.129c0,.31-.253.563-.563.563h-2.033c-.31,0-.563-.253-.563-.563v-4.037c0-.31.253-.563.563-.563h2.033c.31,0,.563.253.563.563v4.037Z" fill="#2f7c3e"/>
+        <g>
+          <circle cx="22.551" cy="108.186" r=".327" fill="#2f7c3e"/>
+          <rect x="21.472" y="103.913" width="2.148" height="3.693" rx=".184" ry=".184" fill="#2f7c3e"/>
+          <rect x="21.472" y="103.913" width="2.148" height="3.693" rx=".184" ry=".184" fill="#2f7c3e"/>
+          <circle cx="22.551" cy="108.186" r=".327" fill="#2f7c3e"/>
+        </g>
+      </g>
+    </g>
+    <g>
+      <text transform="translate(31.285 130.929)" fill="#231f20" font-family="Lato-Bold, Lato" font-size="6" font-weight="700"><tspan x="0" y="0" letter-spacing=".082em">facebook.com/DallasSafec</tspan><tspan x="82.841" y="0" letter-spacing=".068em">r</tspan><tspan x="85.697" y="0" letter-spacing=".082em">ac</tspan><tspan x="92.685" y="0" letter-spacing=".052em">k</tspan><tspan x="96.305" y="0" letter-spacing=".082em">er</tspan></text>
+      <text transform="translate(30.408 107.84)" fill="#231f20" font-family="Lato-Bold, Lato" font-size="6" font-weight="700" letter-spacing=".145em"><tspan x="0" y="0">+1 972-440-0181</tspan></text>
+      <text transform="translate(30.408 119.385)" fill="#231f20" font-family="Lato-Bold, Lato" font-size="6" font-weight="700"><tspan x="0" y="0" letter-spacing=".05em">dallassafec</tspan><tspan x="32.811" y="0" letter-spacing=".035em">r</tspan><tspan x="35.475" y="0" letter-spacing=".05em">ac</tspan><tspan x="42.077" y="0" letter-spacing=".02em">k</tspan><tspan x="45.507" y="0" letter-spacing=".05em">er@gmail.com</tspan></text>
+      <text transform="translate(30.901 142.475)" fill="#231f20" font-family="Lato-Bold, Lato" font-size="6" font-weight="700"><tspan x="0" y="0" letter-spacing=".05em">3710 R</tspan><tspan x="20.808" y="0" letter-spacing=".041em">a</tspan><tspan x="24.194" y="0" letter-spacing=".05em">wlins St., Suite 1420 Dallas, TX 75219</tspan></text>
+    </g>
+    <g>
+      <text transform="translate(173.888 80.175)" fill="#2f7c3e" font-family="Lato-Black, Lato" font-size="9" font-weight="800" letter-spacing=".1em"><tspan x="0" y="0">MANDI HOGAN</tspan></text>
+      <text transform="translate(175.995 87.893)" fill="#231f20" font-family="Lato-Bold, Lato" font-size="6" font-weight="700"><tspan x="0" y="0" letter-spacing=".05em">V</tspan><tspan x="4.56" y="0" letter-spacing="-.083em">P</tspan><tspan x="7.815" y="0" letter-spacing=".05em">, Mar</tspan><tspan x="22.995" y="0" letter-spacing=".02em">k</tspan><tspan x="26.424" y="0" letter-spacing=".05em">eting &amp; I</tspan><tspan x="51.278" y="0" letter-spacing=".032em">n</tspan><tspan x="54.881" y="0" letter-spacing=".033em">v</tspan><tspan x="58.283" y="0" letter-spacing=".05em">estor</tspan></text>
+    </g>
+    <rect y="94.688" width="270" height="1" fill="#231f20"/>
+    <image width="2185" height="663" transform="translate(14.461 17.857) scale(.051)" xlink:href="J:\BUSINESS CARD\BUSINES CARD\Dallas\logo.png"/>
+  </g>
+</svg>

@@ -16,10 +16,20 @@ const LMT_AGRO_DIR = "/all-featured-portfolio/featurd-logo/LMT-Agro";
 // exists on disk, since Vercel deploys to a case-sensitive filesystem.
 const PEST_CONTROL_DIR = "/all-featured-portfolio/featurd-business-card/pest-control";
 
+// Folder and files both lowercase "lmt-co-" throughout — no case mismatch to flag. Note the
+// card-face file is named "...-font.svg" (not "-front") on disk, kept exactly as-is.
+const LMT_CO_DIR = "/all-featured-portfolio/featurd-business-card/lmt-co-business-card";
+
 // Folder is "Front-Line" (capital L); the files inside use "Front-line-" (lowercase l in
 // "line") — kept exactly as they exist on disk, since Vercel deploys to a case-sensitive
 // filesystem.
 const FRONT_LINE_DIR = "/all-featured-portfolio/featurd-business-card/Front-Line";
+
+const DALLAS_DIR = "/all-featured-portfolio/featurd-business-card/dallas";
+// The back-image PNG's real on-disk filename is genuinely malformed — doubled, not a typo of a
+// clean name: "dallas-business-carddallas-business-card-back.png". Confirmed by directory
+// listing, not assumed. Kept exactly as-is per instruction rather than silently renamed.
+const DALLAS_BACK_PNG = `${DALLAS_DIR}/dallas-business-carddallas-business-card-back.png`;
 
 const GAP_PRINT_DETAILS = [
   { label: "Printing Instruction", value: "GAP", type: "text" as const },
@@ -313,21 +323,64 @@ export const brandingVisualsPage: PortfolioPage = {
       name: "Business Card Design",
       items: [
         {
-          id: "business-card-01",
-          // Card reads "Arnaud DUJARRIER — Digital Learning consultant" — a personal
-          // consulting practice, no separate business name. Was "Business Card Design 01"
-          // (generic, indistinguishable from -02); renamed with the user's approval.
-          title: "Arnaud Dujarrier",
-          thumbnail: "/Graphics/business-ard-01.jpg",
-          details: GAP_PRINT_DETAILS,
-        },
-        {
-          id: "business-card-02",
-          // Card's business name is "Weedy Good Tees" (owner: Jams Bean). Was "Business Card
-          // Design 02" (generic, indistinguishable from -01); renamed with the user's approval.
-          title: "Weedy Good Tees",
-          thumbnail: "/Graphics/business-ard-02.jpg",
-          details: GAP_PRINT_DETAILS,
+          id: "lmt-co",
+          title: "LMT CO",
+          thumbnail: `${LMT_CO_DIR}/lmt-co-featurd-business-card.png`,
+          details: [
+            // Only one logo file was supplied — no separate alternate-lockup asset exists.
+            { label: "Alternate Logo", value: "GAP", type: "image" },
+            { label: "Brand Color", value: "#42C3E7", type: "color" },
+            { label: "Typography", value: "GAP", type: "text" },
+            { label: "Complementary Background", value: "#FFFFFF", type: "color" },
+          ],
+          brandBoard: {
+            // No separate tagline text was supplied — the commitment paragraph below (given
+            // verbatim in the task) fills that narrative role instead, same pattern as Reliable
+            // Pest Control and Front Line Road Safety.
+            tagline: null,
+            hero: {
+              // lmt-co-logo.svg — the only logo file: a navy-to-cyan gradient "LMT" mark plus
+              // red-accented lettering, transparent background.
+              image: `${LMT_CO_DIR}/lmt-co-logo.svg`,
+              alt: "LMT CO primary logo lockup",
+            },
+            // The mark's own dark gradient stop (#16284f) is darkestOf(palette)'s computed
+            // default and would collide with the navy swatch below — same failure class as
+            // Relentail/LMT Agro/Front Line. No background rect is baked into the logo SVG
+            // itself (fully transparent), so overridden to white rather than inventing a colour
+            // the source material never specified.
+            heroBg: "#FFFFFF",
+            // Extracted directly from lmt-co-logo.svg's fill/stop-color attributes (grep'd, not
+            // eyeballed) — its three distinct hues: navy gradient start #16284f, cyan gradient
+            // end #42c3e7, and accent red #d12228. The two card-face SVGs
+            // (lmt-co-business-card-font.svg, -back.svg) echo the same three families but with
+            // minor hex drift per file — navy as #15294f/#2b3352, cyan as #43c5e8, red as
+            // #d22328/#eb2127/#ed1c24 — none identical to the logo's own values or to each
+            // other. Flagged, not reconciled; the logo's own fills are used as the source of
+            // truth per the precedent set on every prior brand board here.
+            palette: ["#16284F", "#42C3E7", "#D12228"],
+            // Verbatim, as given.
+            commitment:
+              "Powering logistics, agriculture, and workforce solutions under one trusted name. We move, we grow, we supply.",
+            servicePillars: ["LOGISTICS", "AGRO", "LABOR SUPPLY"],
+            // Front and back card faces — SVG chosen over the also-available PNGs to match the
+            // vector precedent set by every other card-face asset in this file (e.g. Front Line's
+            // -back.svg/-front.svg).
+            cardArtwork: [
+              `${LMT_CO_DIR}/lmt-co-business-card-font.svg`,
+              `${LMT_CO_DIR}/lmt-co-business-card-back.svg`,
+            ],
+            // COPIED DEFAULT FROM RELIABLE PEST CONTROL — not a confirmed real spec for this
+            // brand. Placeholder until the actual print spec is supplied.
+            printSpecs: [
+              { label: "Size", value: "3.75 in × 2.25 in" },
+              { label: "Paper", value: "300 GSM" },
+              { label: "Colour Mode", value: "CMYK" },
+              { label: "Finish", value: "Matt lamination" },
+              { label: "Coating", value: "Spot UV" },
+              { label: "Cut", value: "Round corner" },
+            ],
+          },
         },
         {
           id: "reliable-pest-control",
@@ -447,6 +500,73 @@ export const brandingVisualsPage: PortfolioPage = {
             ],
             // The card-face SVGs' own viewBox (270×162, i.e. 1.667:1) matches the stated trim
             // size (3.75in × 2.25in, i.e. 1.667:1) exactly — no contradiction to flag.
+            printSpecs: [
+              { label: "Size", value: "3.75 in × 2.25 in" },
+              { label: "Paper", value: "300 GSM" },
+              { label: "Colour Mode", value: "CMYK" },
+              { label: "Finish", value: "Matt lamination" },
+              { label: "Coating", value: "Spot UV" },
+              { label: "Cut", value: "Round corner" },
+            ],
+          },
+        },
+        {
+          id: "dallas-safecracker",
+          title: "Dallas Safecracker",
+          thumbnail: `${DALLAS_DIR}/dallas-featurd-business-card.jpg`,
+          details: [
+            // No separate alternate-lockup asset — dallas-logo-white.png looks like a colour
+            // variant by name, but opened directly it's a different, partial composition (just
+            // the "SAFECRACKER" sub-wordmark + safe-dial icon, in black, missing the "DALLAS"
+            // city-skyline mark entirely) — not usable as a full alternate lockup, so left GAP
+            // rather than presented as one.
+            { label: "Alternate Logo", value: "GAP", type: "image" },
+            { label: "Brand Color", value: "#2F7C3E", type: "color" },
+            { label: "Typography", value: "GAP", type: "text" },
+            { label: "Complementary Background", value: "#FFFFFF", type: "color" },
+          ],
+          brandBoard: {
+            tagline: null,
+            hero: {
+              // dallas-logo.png — the only complete lockup (green Dallas skyline badge +
+              // "DALLAS" wordmark + integrated black/white safe-dial icon). No SVG version
+              // exists for this file (unlike every other brand board here) — PNG used as-is.
+              image: `${DALLAS_DIR}/dallas-logo.png`,
+              alt: "Dallas Safecracker primary logo lockup",
+            },
+            // The safe-dial icon's own rim/pupil are near-black (#231f20, extracted below) —
+            // colliding with darkestOf(palette)'s computed default the same way every prior
+            // near-black-mark brand did. The source PNG's own canvas is white/transparent, so
+            // overridden to white rather than inventing a colour.
+            heroBg: "#FFFFFF",
+            // No vector logo exists to extract fill values from directly. Extracted instead from
+            // the two card-face SVGs' fill attributes (grep'd, not eyeballed) — front: #2f7c3e
+            // (12x, the icon/name-accent green), #231f20 (6x, body text + divider line), #fff
+            // (background). Back: #0d0d0d (background rect — a different near-black than the
+            // front's #231f20, flagged not reconciled) and #fff (text). Cross-checked visually
+            // against dallas-logo.png itself: green city-skyline badge, black/white safe-dial —
+            // consistent with these three values, so used as the palette despite having no
+            // direct-from-logo hex source.
+            palette: ["#2F7C3E", "#231F20", "#FFFFFF"],
+            // Verbatim, as given.
+            commitment:
+              "Fast, discreet lock and safe solutions when you need them most. We open, we secure, we protect.",
+            servicePillars: ["LOCKOUT SERVICE", "SAFE CRACKING", "SECURITY SOLUTIONS"],
+            // PNGs used for both faces, NOT the also-available SVGs (a deviation from the
+            // SVG-preferred precedent set by Front Line/LMT CO) — both
+            // dallas-business-card-front.svg and -back.svg embed their corner logo via
+            // xlink:href="J:\BUSINESS CARD\BUSINES CARD\Dallas\logo.png", an absolute path on
+            // the original designer's own Windows machine. That reference resolves nowhere
+            // outside that machine, so rendering either SVG here would show the card with its
+            // logo watermark missing. The PNGs are flattened exports with no such dependency.
+            // Back-image filename is genuinely malformed on disk (doubled, not a typo) — see
+            // DALLAS_BACK_PNG above; used verbatim per instruction rather than renamed.
+            cardArtwork: [
+              `${DALLAS_DIR}/dallas-business-card-font.png`,
+              DALLAS_BACK_PNG,
+            ],
+            // COPIED DEFAULT FROM RELIABLE PEST CONTROL — not a confirmed real spec for this
+            // brand. Placeholder until the actual print spec is supplied.
             printSpecs: [
               { label: "Size", value: "3.75 in × 2.25 in" },
               { label: "Paper", value: "300 GSM" },
