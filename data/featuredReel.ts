@@ -7,6 +7,7 @@ export interface FeaturedReelData {
 
 export const featuredReel: FeaturedReelData = {
   videoId: "ofOym-ErhT8",
-  title: "GAP: confirm title",
-  description: "GAP: confirm description",
+  title: "Showreel — AI Video, Motion & Brand",
+  description:
+    "A 25-second cut of AI video engineering, motion design, and brand work.",
 };
