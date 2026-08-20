@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import type { DetailField, PortfolioItem } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 import { BrandBoardSection } from "./BrandBoardSection";
+import { VideoBoardSection } from "./VideoBoardSection";
 
 function isGap(value: string | string[]) {
   return Array.isArray(value) ? value.every((v) => v === "GAP") : value === "GAP";
@@ -96,7 +97,7 @@ export function DetailsModal({
             transition={{ duration: 0.2, ease: "easeOut" }}
             className={cn(
               "relative w-full overflow-hidden rounded-2xl border border-border bg-background",
-              item.brandBoard ? "max-w-3xl" : "max-w-lg"
+              item.brandBoard || item.videoBoard ? "max-w-3xl" : "max-w-lg"
             )}
             onClick={(e) => e.stopPropagation()}
           >
@@ -108,7 +109,11 @@ export function DetailsModal({
               <X className="h-4 w-4" />
             </button>
 
-            {item.brandBoard ? (
+            {item.videoBoard ? (
+              <div className="max-h-[85vh] overflow-y-auto">
+                <VideoBoardSection board={item.videoBoard} title={item.title} />
+              </div>
+            ) : item.brandBoard ? (
               <div className="max-h-[85vh] overflow-y-auto">
                 <BrandBoardSection board={item.brandBoard} title={item.title} />
               </div>
