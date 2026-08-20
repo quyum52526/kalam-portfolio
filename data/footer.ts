@@ -1,12 +1,20 @@
-import type { IconType } from "react-icons";
-import { SiFiverr, SiUpwork } from "react-icons/si";
+import { SiTelegram } from "react-icons/si";
 import { workCategories } from "./categories";
+import type { ContactIcon } from "./contact";
+import {
+  emailPrimary,
+  whatsapp,
+  website,
+  linkedin,
+  fiverr,
+  upwork,
+} from "./contact";
 
 export interface FooterLink {
   label: string;
   href: string;
-  /** Inline brand icon, Hire Me column only. Omitted where no react-icons/si glyph exists. */
-  icon?: IconType;
+  /** Inline brand icon, Hire Me / Contact columns only. */
+  icon?: ContactIcon;
 }
 
 /** Short-form labels for the footer's Portfolio column — the full `label` in
@@ -29,22 +37,20 @@ export const footerPortfolioLinks: FooterLink[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-/** Column 3 — Hire Me. External freelance-platform profiles.
- *  LinkedIn has no icon: react-icons/si dropped its LinkedIn glyph upstream (SiLinkedin doesn't
- *  exist in the installed version) — left icon-less rather than substituting a different pack. */
-export const footerHireMeLinks: FooterLink[] = [
-  { label: "Fiverr", href: "https://www.fiverr.com/kalam52526", icon: SiFiverr },
-  {
-    label: "Upwork",
-    href: "https://www.upwork.com/freelancers/~017a0f58caf2efb8d0",
-    icon: SiUpwork,
-  },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/kalam52526/" },
-];
+/** Column 3 — Hire Me. External freelance-platform profiles, sourced from
+ *  data/contact.ts (single source of truth — see that file for the Fiverr/Upwork GAP
+ *  notes). LinkedIn has no icon: react-icons/si dropped its LinkedIn glyph upstream
+ *  (SiLinkedin doesn't exist in the installed version) — data/contact.ts's `linkedin`
+ *  channel already carries the fa6 fallback icon instead. */
+export const footerHireMeLinks: FooterLink[] = [fiverr, upwork, linkedin];
 
-/** Column 4 — Contact. Real protocol links (mailto / wa.me / t.me). */
+/** Column 4 — Contact. Email/WhatsApp/Website are the same data/contact.ts channels
+ *  the Contact page and FloatingDock use — no separate hardcoded copies here. Telegram
+ *  isn't part of that shared contact data (it's a social profile, already in the
+ *  socialLinks row) — kept here as its own link, unchanged from before. */
 export const footerContactLinks: FooterLink[] = [
-  { label: "Email", href: "mailto:info@kalamcreative.com" },
-  { label: "WhatsApp", href: "https://wa.me/8801962434901" },
-  { label: "Telegram", href: "https://t.me/kalam52526" },
+  emailPrimary,
+  whatsapp,
+  website,
+  { label: "Telegram", href: "https://t.me/kalam52526", icon: SiTelegram },
 ];

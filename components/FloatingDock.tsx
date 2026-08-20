@@ -12,22 +12,33 @@ import {
 } from "framer-motion";
 import { Home, LayoutGrid, Mail, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { emailPrimary } from "@/data/contact";
 
-const items: { href: string; label: string; icon: LucideIcon }[] = [
+/** The mail icon still navigates to /contact (unchanged) — only its accessible label is
+ *  sourced from data/contact.ts, so it never hardcodes a separate copy of the primary
+ *  email address. */
+const items: { href: string; label: string; icon: LucideIcon; ariaLabel?: string }[] = [
   { href: "/", label: "Home", icon: Home },
   { href: "/work", label: "Work", icon: LayoutGrid },
-  { href: "/contact", label: "Contact", icon: Mail },
+  {
+    href: "/contact",
+    label: "Contact",
+    icon: Mail,
+    ariaLabel: `Contact — ${emailPrimary.value}`,
+  },
 ];
 
 function DockItem({
   href,
   label,
+  ariaLabel,
   Icon,
   active,
   mouseX,
 }: {
   href: string;
   label: string;
+  ariaLabel?: string;
   Icon: LucideIcon;
   active: boolean;
   mouseX: MotionValue<number>;
@@ -46,7 +57,7 @@ function DockItem({
   return (
     <Link
       href={href}
-      aria-label={label}
+      aria-label={ariaLabel ?? label}
       aria-current={active ? "page" : undefined}
       className="group relative flex flex-col items-center"
     >
@@ -102,6 +113,7 @@ export function FloatingDock() {
               key={item.href}
               href={item.href}
               label={item.label}
+              ariaLabel={item.ariaLabel}
               Icon={item.icon}
               active={active}
               mouseX={mouseX}

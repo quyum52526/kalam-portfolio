@@ -2,6 +2,7 @@ import type { IconType } from "react-icons";
 import { SiFacebook, SiYoutube, SiInstagram, SiTelegram } from "react-icons/si";
 // react-icons/si (Simple Icons) has no LinkedIn glyph (dropped upstream); fa6 fills the gap.
 import { FaLinkedinIn } from "react-icons/fa6";
+import { linkedin } from "./contact";
 
 export interface SocialLink {
   name: string;
@@ -18,7 +19,8 @@ export const socialLinks: SocialLink[] = [
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/kalam52526/",
+    // Reuses data/contact.ts's canonical LinkedIn URL rather than hardcoding a second copy.
+    href: linkedin.href,
     icon: FaLinkedinIn,
   },
   {

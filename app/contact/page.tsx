@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ContactPageBody } from "@/components/contact/ContactPageBody";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -12,24 +13,24 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 py-16 text-center">
-      <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-        Let&apos;s talk
+    <section className="mx-auto max-w-6xl px-6 pt-16 pb-24">
+      <p className="text-sm font-medium uppercase tracking-wider text-cyan-400">
+        Contact
+      </p>
+      {/* clamp floor lowered from the site's usual 2.5rem (HeroSection's h1) to 2rem so
+          it keeps shrinking through the 360–390px range instead of holding at a fixed
+          40px there; ceiling unchanged at 4rem, still reached well before desktop
+          widths, so desktop rendering is unaffected. */}
+      <h1 className="mt-3 font-display text-[clamp(2rem,8vw,4rem)] font-bold tracking-tight">
+        Let&apos;s talk.
       </h1>
-      <p className="mt-3 text-muted">
-        Reach out directly or book time on my calendar.
+      <p className="mt-4 max-w-2xl text-muted">
+        Reach out directly or book time on my calendar. Tell me what you are
+        building and I will come back with a scope, a timeline, and a price.
       </p>
 
-      <a
-        href="mailto:hello@example.com"
-        className="mt-6 inline-block text-lg font-medium underline underline-offset-4"
-      >
-        hello@example.com
-      </a>
-
-      {/* TODO: replace with real Calendly embed URL */}
-      <div className="mt-12 flex h-[600px] w-full items-center justify-center rounded-2xl border border-dashed border-border text-sm text-muted">
-        Calendly embed placeholder
+      <div className="mt-12">
+        <ContactPageBody />
       </div>
     </section>
   );
