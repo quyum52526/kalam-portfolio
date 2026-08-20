@@ -2,8 +2,11 @@ import Link from "next/link";
 import { workCategories } from "@/data/categories";
 import { cn } from "@/lib/utils";
 
+// py-3 (was py-2) brings the tappable height to 44px; -my-1 cancels the added
+// 4px/side in the margin box so the nav's own height and spacing stay unchanged —
+// only the real, measurable hit area grows.
 const TAB_CLASS =
-  "relative rounded-full px-4 py-2 text-sm font-medium transition-colors";
+  "relative -my-1 rounded-full px-4 py-3 text-sm font-medium transition-colors";
 
 /** Real navigation, not a client-side filter — each tab is a Link to its own
  *  /work or /work/[category] route, so the URL changes and back/forward work. */

@@ -29,10 +29,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the mobile sheet on route change, on Escape, and lock page scroll while it's open.
-  useEffect(() => {
+  // Close the mobile sheet on route change (computed during render, not in an effect,
+  // so this doesn't trigger the extra commit-then-effect render pass that
+  // react-hooks/set-state-in-effect flags), on Escape, and lock page scroll while open.
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setMobileOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!mobileOpen) return;

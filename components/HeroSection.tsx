@@ -309,7 +309,11 @@ export default function HeroSection() {
                 key={role.id}
                 onClick={() => selectRole(i)}
                 className={cn(
-                  "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                  // py-3 (was py-2) brings the tappable height to 44px; -my-1 cancels
+                  // the added 4px/side in the margin box so surrounding spacing and
+                  // the wrapper's own size stay exactly as before — only the real,
+                  // measurable hit area grows.
+                  "relative -my-1 rounded-full px-4 py-3 text-sm font-medium transition-colors",
                   i === activeIndex
                     ? "text-navy-900"
                     : "text-muted hover:text-text-body"
