@@ -7,6 +7,15 @@ const DATING_APP_AD_VIDEO_ID = "zhI1k2TdGPQ";
 // false 200) — used directly, no hqdefault.jpg fallback needed.
 const DATING_APP_AD_THUMBNAIL = `https://i.ytimg.com/vi/${DATING_APP_AD_VIDEO_ID}/maxresdefault.jpg`;
 
+const TYPESCRIPT_VIDEO_ID = "L6zrC7gkVwI";
+const TYPESCRIPT_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${TYPESCRIPT_VIDEO_ID}/hqdefault.jpg`;
+
+const HOME_GUARANTEE_VIDEO_ID = "jaETednE6p8";
+const HOME_GUARANTEE_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${HOME_GUARANTEE_VIDEO_ID}/hqdefault.jpg`;
+
+const BNB_NTE_VIDEO_ID = "TN3taR07EUM";
+const BNB_NTE_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${BNB_NTE_VIDEO_ID}/hqdefault.jpg`;
+
 export const aiGenerativePage: PortfolioPage = {
   id: "ai-generative",
   label: "AI & Generative",
@@ -53,6 +62,84 @@ export const aiGenerativePage: PortfolioPage = {
             ],
             // FACT — canonical short link, matches the video ID above.
             youtubeUrl: `https://youtu.be/${DATING_APP_AD_VIDEO_ID}`,
+          },
+        },
+        {
+          id: "typescript-branded-video-workflow",
+          title: "TypeScript workflow that generates multiple branded videos automatically",
+          thumbnail: TYPESCRIPT_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: TYPESCRIPT_VIDEO_ID,
+            videoTitle: "TypeScript workflow that generates multiple branded videos automatically",
+            thumbnail: TYPESCRIPT_VIDEO_THUMBNAIL,
+            overview:
+              "A TypeScript-powered workflow for generating multiple branded videos automatically, showing how reusable code can connect content, visual identity, and video production at scale.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "TypeScript automation and reusable video components",
+              "Branded content generation from structured inputs",
+              "Automated rendering of multiple video outputs",
+            ],
+            youtubeUrl: `https://youtu.be/${TYPESCRIPT_VIDEO_ID}`,
+          },
+        },
+        {
+          id: "first-home-guarantee-explainer",
+          title: "First Home Guarantee Explained: Buy a Home with Just 5% Deposit (2026 Scheme)",
+          thumbnail: HOME_GUARANTEE_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: HOME_GUARANTEE_VIDEO_ID,
+            videoTitle: "First Home Guarantee Explained: Buy a Home with Just 5% Deposit (2026 Scheme)",
+            thumbnail: HOME_GUARANTEE_VIDEO_THUMBNAIL,
+            overview:
+              "An explanatory video breaking down the First Home Guarantee and how eligible buyers may purchase a home with a 5% deposit under the 2026 scheme.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "Research-led explainer structure",
+              "Scripted educational video production",
+              "Branded editing and visual pacing for clear communication",
+            ],
+            youtubeUrl: `https://youtu.be/${HOME_GUARANTEE_VIDEO_ID}`,
+          },
+        },
+        {
+          id: "bnb-nte-pancakeswap-tutorial",
+          title: "How to Swap BNB for NTE Token on PancakeSwap | Step-by-Step MetaMask Tutorial",
+          thumbnail: BNB_NTE_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: BNB_NTE_VIDEO_ID,
+            videoTitle: "How to Swap BNB for NTE Token on PancakeSwap | Step-by-Step MetaMask Tutorial",
+            thumbnail: BNB_NTE_VIDEO_THUMBNAIL,
+            overview:
+              "A step-by-step tutorial showing how to swap BNB for NTE Token on PancakeSwap using MetaMask, presented as a clear crypto onboarding walkthrough.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "Screen-recorded product walkthrough",
+              "Step-by-step instructional scripting",
+              "Branded editing with clear on-screen guidance",
+            ],
+            youtubeUrl: `https://youtu.be/${BNB_NTE_VIDEO_ID}`,
           },
         },
       ],
