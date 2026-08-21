@@ -33,6 +33,8 @@ const DALLAS_BACK_PNG = `${DALLAS_DIR}/dallas-business-carddallas-business-card-
 
 const T_SHIRT_DIFFERENT_DIR = "/all-featured-portfolio/T-shirt/Different";
 const T_SHIRT_MY_CITY_DIR = "/all-featured-portfolio/T-shirt/my-city-my-kicks";
+const T_SHIRT_YOU_ONLY_FAIL_DIR = "/all-featured-portfolio/T-shirt/you-only-fail";
+const T_SHIRT_DISCIPLINE_DIR = "/all-featured-portfolio/T-shirt/discipline";
 
 const GAP_PRINT_DETAILS = [
   { label: "Printing Instruction", value: "GAP", type: "text" as const },
@@ -51,7 +53,7 @@ export const brandingVisualsPage: PortfolioPage = {
         {
           id: "digicode-it-logo",
           title: "DigiCode IT",
-          thumbnail: `${DIGICODE_IT_DIR}/digicode-it-logo-mockup.jpg`,
+          thumbnail: `${DIGICODE_IT_DIR}/digicode-it-logo-mockup.png`,
           details: [
             {
               label: "Alternate Logo",
@@ -725,10 +727,7 @@ export const brandingVisualsPage: PortfolioPage = {
               label: "Design Details",
               body: 'A typographic streetwear graphic built around the word "Different" — set twice, once inside a rough diagonal-hatch stamp and once in a clean yellow-bordered box — bridging a short manifesto line at the top with the bold call-out "INSPIRES" at the bottom. Yellow corner-bracket rules frame the composition, echoing gig-poster and zine layouts. Ink swaps from black (on light garments) to white (on dark garments); the yellow accent and layout stay identical across both.',
             },
-            cardArtwork: [
-              `${T_SHIRT_DIFFERENT_DIR}/Different-black.png`,
-              `${T_SHIRT_DIFFERENT_DIR}/Different-white.png`,
-            ],
+            cardArtwork: `${T_SHIRT_DIFFERENT_DIR}/Different-white.png`,
             // Print method, placement, print size, and DPI are not verifiable from the
             // supplied assets — reasonable working values, not confirmed production specs.
             // Garment Colour Guidance is the one row here that IS fact, derived directly from
@@ -741,6 +740,110 @@ export const brandingVisualsPage: PortfolioPage = {
                 label: "Garment Colour Guidance",
                 value: "Black ink on light garments · white ink on dark garments",
               },
+            ],
+          },
+        },
+        {
+          id: "you-only-fail-tshirt",
+          title: "You Only Fail",
+          thumbnail: `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-mockup.png`,
+          details: [
+            { label: "Print Method", value: "Screen print", type: "text" },
+            { label: "Fabric Color", value: "#000000", type: "color" },
+            {
+              label: "Variations",
+              value: [
+                `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-black.png`,
+                `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-white.png`,
+                `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-black.svg`,
+                `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-white.svg`,
+              ],
+              type: "image",
+            },
+          ],
+          brandBoard: {
+            tagline: null,
+            heroLayout: "photo",
+            hero: {
+              image: `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-mockup.png`,
+              alt: '"You Only Fail" t-shirt design on white and black tees, hanging',
+            },
+            secondaryImage: {
+              label: "Garment Preview",
+              image: `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-mockup.png`,
+              alt: '"You Only Fail" design on a white tee, detail view',
+            },
+            palette: ["#000000", "#FFFFFF"],
+            designSpecs: {
+              label: "Design Details",
+              items: [
+                { label: "Design Name", value: "You Only Fail" },
+                { label: "Garment Colours", value: "Black, White" },
+                { label: "Orientation", value: "Portrait" },
+                { label: "Typography", value: "Bold condensed display" },
+              ],
+            },
+            description: {
+              label: "Design Details",
+              body: 'A motivational typographic graphic built around the message "FAILURE — YOU ONLY FAIL WHEN YOU STOP TRYING". The high-contrast composition is prepared in black-ink and white-ink colourways for light and dark garments.',
+            },
+            cardArtwork: `${T_SHIRT_YOU_ONLY_FAIL_DIR}/you-only-fail-white.png`,
+            printSpecs: [
+              { label: "Print Method", value: "Screen print" },
+              { label: "Placement", value: "Full front, chest–torso" },
+              { label: "Garment Colour Guidance", value: "Black ink on light garments · white ink on dark garments" },
+            ],
+          },
+        },
+        {
+          id: "discipline-tshirt",
+          title: "Discipline",
+          thumbnail: `${T_SHIRT_DISCIPLINE_DIR}/discipline-mockup.png`,
+          details: [
+            { label: "Print Method", value: "Screen print", type: "text" },
+            { label: "Fabric Color", value: "#000000", type: "color" },
+            {
+              label: "Variations",
+              value: [
+                `${T_SHIRT_DISCIPLINE_DIR}/discipline-black.png`,
+                `${T_SHIRT_DISCIPLINE_DIR}/discipline-white.png`,
+                `${T_SHIRT_DISCIPLINE_DIR}/discipline-black.svg`,
+                `${T_SHIRT_DISCIPLINE_DIR}/discipline-white.svg`,
+              ],
+              type: "image",
+            },
+          ],
+          brandBoard: {
+            tagline: null,
+            heroLayout: "photo",
+            hero: {
+              image: `${T_SHIRT_DISCIPLINE_DIR}/discipline-mockup.png`,
+              alt: '"Discipline" t-shirt design on white and black tees, hanging',
+            },
+            secondaryImage: {
+              label: "Garment Preview",
+              image: `${T_SHIRT_DISCIPLINE_DIR}/discipline-mockup.png`,
+              alt: '"Discipline" design on a white tee, detail view',
+            },
+            palette: ["#000000", "#FFFFFF"],
+            designSpecs: {
+              label: "Design Details",
+              items: [
+                { label: "Design Name", value: "Discipline" },
+                { label: "Garment Colours", value: "Black, White" },
+                { label: "Orientation", value: "Portrait" },
+                { label: "Typography", value: "Bold condensed display" },
+              ],
+            },
+            description: {
+              label: "Design Details",
+              body: 'A motivational typographic design built around the message "DISCIPLINE IS DOING WHAT YOU HATE TO DO, BUT ANYWAY". The artwork is prepared in black-ink and white-ink colourways for light and dark garments.',
+            },
+            cardArtwork: `${T_SHIRT_DISCIPLINE_DIR}/discipline-white.png`,
+            printSpecs: [
+              { label: "Print Method", value: "Screen print" },
+              { label: "Placement", value: "Full front, chest–torso" },
+              { label: "Garment Colour Guidance", value: "Black ink on light garments · white ink on dark garments" },
             ],
           },
         },

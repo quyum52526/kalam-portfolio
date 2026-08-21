@@ -40,6 +40,7 @@ export function ItemCard({
   // fill inside a 9:16 card instead of cropping down to the real content, so video items use
   // the plain fill-and-crop path below, same as flat logo/product thumbnails.
   const isBrandBoardMockup = Boolean(item.brandBoard);
+  const isPortraitMockup = item.brandBoard?.heroLayout === "photo";
 
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-border bg-surface">
@@ -53,7 +54,11 @@ export function ItemCard({
             decoding="async"
             className={cn(
               "absolute inset-0 h-full w-full",
-              isBrandBoardMockup ? "object-contain" : "object-cover"
+              isPortraitMockup
+                ? "object-cover"
+                : isBrandBoardMockup
+                  ? "object-contain"
+                  : "object-cover"
             )}
           />
         ) : (
