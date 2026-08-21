@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { WorkCategory } from "@/data/categories";
-import type { PortfolioCategory } from "@/types/portfolio";
+import type { PortfolioCategory, PortfolioPageId } from "@/types/portfolio";
+import { type FeaturedMap, sortGroupItems } from "@/lib/featured";
 import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
 
 const MAX_GROUPS = 2;
@@ -15,17 +16,29 @@ const MAX_ITEMS_PER_GROUP = 4;
  *  Details popup behaviour are identical to the category page; only the items array
  *  handed to it is pre-sliced here. The category heading below is sized a step larger
  *  (text-2xl/3xl) than PortfolioCategorySection's own sub-group heading (text-xl/2xl)
- *  so the hierarchy reads: category → sub-group → cards. */
+ *  so the hierarchy reads: category → sub-group → cards.
+ *
+ *  `featuredMap` is optional and purely additive — omit it and groups render in their
+ *  original data order exactly as before the Feature/Pin system existed. Passed in, each
+ *  group is sorted (pinned items first, most-recent pin on top) before slicing to the
+ *  first MAX_ITEMS_PER_GROUP, so a newly-pinned item can appear in this capped preview
+ *  even if its original position in the data was past the cap. */
 export function HomeCategoryFeatureGrouped({
   category,
   groups,
+  featuredMap,
 }: {
   category: WorkCategory;
   groups: PortfolioCategory[];
+  featuredMap?: FeaturedMap;
 }) {
+  const pageId = category.slug as PortfolioPageId;
   const featuredGroups = groups.slice(0, MAX_GROUPS).map((group) => ({
     ...group,
-    items: group.items.slice(0, MAX_ITEMS_PER_GROUP),
+    items: (featuredMap
+      ? sortGroupItems(group.items, pageId, group.id, featuredMap)
+      : group.items
+    ).slice(0, MAX_ITEMS_PER_GROUP),
   }));
 
   return (

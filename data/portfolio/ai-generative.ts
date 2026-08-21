@@ -25,6 +25,12 @@ const FIVERR_GIG_INTRO_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${FIVERR_GIG_IN
 const AI_VIDEO_WORKFLOW_VIDEO_ID = "caEnQ_cEnWw";
 const AI_VIDEO_WORKFLOW_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${AI_VIDEO_WORKFLOW_VIDEO_ID}/hqdefault.jpg`;
 
+const NEW_AI_VIDEO_ID = "1MLkcrXVdnw";
+const NEW_AI_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${NEW_AI_VIDEO_ID}/hqdefault.jpg`;
+
+const ANANTA_LOGO_ANIMATION_VIDEO_ID = "FzJZ3pWoOsA";
+const ANANTA_LOGO_ANIMATION_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${ANANTA_LOGO_ANIMATION_VIDEO_ID}/hqdefault.jpg`;
+
 export const aiGenerativePage: PortfolioPage = {
   id: "ai-generative",
   label: "AI & Generative",
@@ -36,6 +42,60 @@ export const aiGenerativePage: PortfolioPage = {
       // Video thumbnails are 16:9 — the default 1:1 square would crop them top/bottom.
       aspectRatio: "16/9",
       items: [
+        {
+          id: "ananta-event-entertainment-logo-animation",
+          title: "Ananta Event & Entertainment — Logo Animation Reveal | Motion Graphics Portfolio",
+          thumbnail: ANANTA_LOGO_ANIMATION_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: ANANTA_LOGO_ANIMATION_VIDEO_ID,
+            videoTitle:
+              "Ananta Event & Entertainment — Logo Animation Reveal | Motion Graphics Portfolio",
+            thumbnail: ANANTA_LOGO_ANIMATION_VIDEO_THUMBNAIL,
+            overview:
+              "A logo animation reveal for Ananta Event & Entertainment, presenting the identity through motion graphics and a polished visual finish.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "Logo identity preparation for motion",
+              "Motion graphics animation and reveal timing",
+              "Final edit and polish for a branded presentation",
+            ],
+            youtubeUrl: `https://youtu.be/${ANANTA_LOGO_ANIMATION_VIDEO_ID}`,
+          },
+        },
+        {
+          id: "new-ai-video",
+          title: "They All Use AI — Simple AI Explainer Series | Motion Graphics Portfolio (Module 3/90)",
+          thumbnail: NEW_AI_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: NEW_AI_VIDEO_ID,
+            videoTitle:
+              "They All Use AI — Simple AI Explainer Series | Motion Graphics Portfolio (Module 3/90)",
+            thumbnail: NEW_AI_VIDEO_THUMBNAIL,
+            overview:
+              "An AI-generated video project showcasing generative visual storytelling and production craft.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "AI-assisted visual development",
+              "Generative video production and shot selection",
+              "Final edit and pacing for a polished presentation",
+            ],
+            youtubeUrl: `https://youtu.be/${NEW_AI_VIDEO_ID}`,
+          },
+        },
         {
           id: "ai-video-workflow-breakdown",
           title: "From Prompt to Premium: AI Video Workflow Breakdown (Veo3 + CapCut)",

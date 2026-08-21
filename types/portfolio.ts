@@ -129,6 +129,12 @@ export interface PortfolioItem {
   id: string;
   title: string;
   thumbnail: string;
+  /** Pin state for the Feature/Pin admin system — NOT set in the static data files.
+   *  Populated at render time by lib/featured.ts from the KV-backed featured map, then
+   *  read by sortItemsByFeatured() to order this item within its own PortfolioCategory
+   *  group. Undefined (the state for every item until an owner pins it) means "not
+   *  featured" — identical to today's unpinned rendering. */
+  featuredAt?: number;
   /** Fully dynamic — DetailsModal renders whatever is here. */
   details: DetailField[];
   /** Optional richer brand-board view (hero lockup, logo options, mood board, palette, fonts,

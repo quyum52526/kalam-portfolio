@@ -4,6 +4,7 @@ import { useState } from "react";
 import { getCategoryBySlug } from "@/data/categories";
 import type { PortfolioPageId } from "@/types/portfolio";
 import { portfolioPages } from "@/lib/portfolio";
+import type { FeaturedMap } from "@/lib/featured";
 import { HomeWorkTabs } from "@/components/HomeWorkTabs";
 import { HomeCategoryFeatureGrouped } from "@/components/portfolio/HomeCategoryFeatureGrouped";
 import { CategoryPageContent } from "@/components/portfolio/CategoryPageContent";
@@ -26,7 +27,15 @@ const ALL_WORK_ORDER: PortfolioPageId[] = [
  *    top section with Details buttons, plus the bottom flat "All <Category> Work"
  *    grid), via the same CategoryPageContent the category page itself renders — no
  *    "View all" link needed since everything is already shown. */
-export function HomeFeaturedWork() {
+export function HomeFeaturedWork({
+  featuredMap,
+}: {
+  /** Optional — omit and every child renders in original data order, unchanged from
+   *  before the Feature/Pin system existed. app/page.tsx fetches this server-side
+   *  (lib/featured-store.ts) once and passes it down as a plain prop, since this
+   *  component is a Client Component and can't read Redis itself. */
+  featuredMap?: FeaturedMap;
+}) {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
   return (
@@ -34,7 +43,7 @@ export function HomeFeaturedWork() {
       <HomeWorkTabs activeSlug={activeSlug} onSelect={setActiveSlug} />
 
       {activeSlug ? (
-        <CategoryPageContent slug={activeSlug} />
+        <CategoryPageContent slug={activeSlug} featuredMap={featuredMap} />
       ) : (
         ALL_WORK_ORDER.map((id) => {
           const page = portfolioPages.find((p) => p.id === id);
@@ -48,6 +57,7 @@ export function HomeFeaturedWork() {
               key={page.id}
               category={category}
               groups={page.categories}
+              featuredMap={featuredMap}
             />
           );
         })

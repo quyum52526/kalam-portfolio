@@ -1,5 +1,6 @@
 import { getCategoryBySlug } from "@/data/categories";
 import { getPortfolioPageBySlug } from "@/lib/portfolio";
+import { applyFeaturedToPage, type FeaturedMap } from "@/lib/featured";
 import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
 import { FlatGallery } from "@/components/portfolio/FlatGallery";
 
@@ -12,12 +13,28 @@ import { FlatGallery } from "@/components/portfolio/FlatGallery";
  *  notFound()) before rendering this; that API only makes sense at a route boundary,
  *  which the home page's button-driven chip view isn't. Both call sites only ever pass
  *  a slug from the fixed workCategories list, so the null-guard below is a defensive
- *  fallback, not a real code path. */
-export function CategoryPageContent({ slug }: { slug: string }) {
+ *  fallback, not a real code path.
+ *
+ *  `featuredMap` is optional and purely additive: omit it (or pass nothing) and this
+ *  renders exactly as before the Feature/Pin system existed. When passed, it's already-
+ *  fetched data (lib/featured-store.ts's KV read happens in the caller, once, server-side)
+ *  — applying it here is pure sorting, which is why this component can stay synchronous
+ *  and keep working from both a Server Component and a "use client" one. */
+export function CategoryPageContent({
+  slug,
+  featuredMap,
+}: {
+  slug: string;
+  featuredMap?: FeaturedMap;
+}) {
   const category = getCategoryBySlug(slug);
   if (!category) return null;
 
-  const portfolioPage = getPortfolioPageBySlug(slug);
+  const rawPortfolioPage = getPortfolioPageBySlug(slug);
+  const portfolioPage =
+    rawPortfolioPage && featuredMap
+      ? applyFeaturedToPage(rawPortfolioPage, featuredMap)
+      : rawPortfolioPage;
 
   return (
     <>
