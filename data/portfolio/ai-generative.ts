@@ -16,6 +16,15 @@ const HOME_GUARANTEE_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${HOME_GUARANTEE_
 const BNB_NTE_VIDEO_ID = "TN3taR07EUM";
 const BNB_NTE_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${BNB_NTE_VIDEO_ID}/hqdefault.jpg`;
 
+const DIRT_BIKE_ADVENTURE_VIDEO_ID = "yyUo_-jOM80";
+const DIRT_BIKE_ADVENTURE_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${DIRT_BIKE_ADVENTURE_VIDEO_ID}/hqdefault.jpg`;
+
+const FIVERR_GIG_INTRO_VIDEO_ID = "hm0U5f6BOnY";
+const FIVERR_GIG_INTRO_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${FIVERR_GIG_INTRO_VIDEO_ID}/hqdefault.jpg`;
+
+const AI_VIDEO_WORKFLOW_VIDEO_ID = "caEnQ_cEnWw";
+const AI_VIDEO_WORKFLOW_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${AI_VIDEO_WORKFLOW_VIDEO_ID}/hqdefault.jpg`;
+
 export const aiGenerativePage: PortfolioPage = {
   id: "ai-generative",
   label: "AI & Generative",
@@ -27,6 +36,87 @@ export const aiGenerativePage: PortfolioPage = {
       // Video thumbnails are 16:9 — the default 1:1 square would crop them top/bottom.
       aspectRatio: "16/9",
       items: [
+        {
+          id: "ai-video-workflow-breakdown",
+          title: "From Prompt to Premium: AI Video Workflow Breakdown (Veo3 + CapCut)",
+          thumbnail: AI_VIDEO_WORKFLOW_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: AI_VIDEO_WORKFLOW_VIDEO_ID,
+            videoTitle:
+              "From Prompt to Premium: AI Video Workflow Breakdown (Veo3 + CapCut) — Under 2 Hours",
+            thumbnail: AI_VIDEO_WORKFLOW_VIDEO_THUMBNAIL,
+            overview:
+              "A practical breakdown of an AI video workflow, following the process from prompt development to a polished final edit using Veo3 and CapCut.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "Prompt development and AI video generation with Veo3",
+              "Shot selection and sequence assembly",
+              "Final edit, pacing, and captions in CapCut",
+            ],
+            youtubeUrl: `https://youtu.be/${AI_VIDEO_WORKFLOW_VIDEO_ID}`,
+          },
+        },
+        {
+          id: "fiverr-gig-intro",
+          title: "Fiverr Gig Intro — Professional Video Editor & Motion Graphics Showreel",
+          thumbnail: FIVERR_GIG_INTRO_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: FIVERR_GIG_INTRO_VIDEO_ID,
+            videoTitle:
+              "Fiverr Gig Intro — Professional Video Editor & Motion Graphics Showreel",
+            thumbnail: FIVERR_GIG_INTRO_VIDEO_THUMBNAIL,
+            overview:
+              "A professional Fiverr gig introduction presenting video editing, motion graphics, and showreel work in a concise portfolio format.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "Video editing and showreel sequencing",
+              "Motion graphics and branded presentation",
+              "Portfolio-focused pacing for a freelance service intro",
+            ],
+            youtubeUrl: `https://youtu.be/${FIVERR_GIG_INTRO_VIDEO_ID}`,
+          },
+        },
+        {
+          id: "dirt-bike-adventure-edit",
+          title: "Dirt Bike Adventure Edit — Off-Road Forest Trails, Cliff Jumps & Beach Rides",
+          thumbnail: DIRT_BIKE_ADVENTURE_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: DIRT_BIKE_ADVENTURE_VIDEO_ID,
+            videoTitle:
+              "Dirt Bike Adventure Edit — Off-Road Forest Trails, Cliff Jumps & Beach Rides",
+            thumbnail: DIRT_BIKE_ADVENTURE_VIDEO_THUMBNAIL,
+            overview:
+              "An energetic dirt-bike adventure edit moving through off-road forest trails, cliff jumps, and beach rides with a cinematic, action-focused pace.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "Adventure footage selection and sequencing",
+              "Action-focused edit with cinematic pacing",
+              "Colour and sound treatment for an immersive ride experience",
+            ],
+            youtubeUrl: `https://youtu.be/${DIRT_BIKE_ADVENTURE_VIDEO_ID}`,
+          },
+        },
         {
           id: "dating-app-ad",
           // Exact title from the YouTube oEmbed API (fetched live, not guessed) — short enough

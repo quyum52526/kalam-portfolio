@@ -22,6 +22,17 @@ const TECHBITES_AI_CALL_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${TECHBITES_AI
 const PERSONAL_BRAND_INTRO_VIDEO_ID = "xo4HNVG4Zng";
 const PERSONAL_BRAND_INTRO_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${PERSONAL_BRAND_INTRO_VIDEO_ID}/hqdefault.jpg`;
 
+const SMART_TOOTHBRUSH_AD_VIDEO_ID = "2nfQGYcASeI";
+// "hq2.jpg" isn't a real YouTube thumbnail filename (valid ones: default/mqdefault/hqdefault/
+// sddefault/maxresdefault.jpg) — the CDN silently 200s it anyway with an unrelated auto-extracted
+// video frame instead of 404ing, so the broken path never surfaced as an error, just the wrong
+// image. hqdefault.jpg for this ID is confirmed (downloaded and viewed) to be the real custom
+// thumbnail set in YouTube Studio — the "Smart Toothbrush Concept" title card.
+const SMART_TOOTHBRUSH_AD_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${SMART_TOOTHBRUSH_AD_VIDEO_ID}/hqdefault.jpg`;
+
+const DIRT_BIKE_PORTFOLIO_CUT_VIDEO_ID = "O_hw-7_jEY8";
+const DIRT_BIKE_PORTFOLIO_CUT_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${DIRT_BIKE_PORTFOLIO_CUT_VIDEO_ID}/hqdefault.jpg`;
+
 export const motionReelsPage: PortfolioPage = {
   id: "motion-reels",
   label: "Motion & Reels",
@@ -33,6 +44,34 @@ export const motionReelsPage: PortfolioPage = {
       // Vertical Short thumbnails are 9:16 — the default 1:1 square would crop them further.
       aspectRatio: "9/16",
       items: [
+        {
+          id: "dirt-bike-adventure-portfolio-cut",
+          title: "Dirt Bike Adventure Edit — Off-Road Forest Trails, Cliff Jumps & Beach Rides",
+          thumbnail: DIRT_BIKE_PORTFOLIO_CUT_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "9:16 video", type: "text" },
+            { label: "Platform", value: "YouTube Shorts", type: "text" },
+          ],
+          videoBoard: {
+            videoId: DIRT_BIKE_PORTFOLIO_CUT_VIDEO_ID,
+            videoTitle:
+              "Dirt Bike Adventure Edit — Off-Road Forest Trails, Cliff Jumps & Beach Rides | Portfolio Cut",
+            thumbnail: DIRT_BIKE_PORTFOLIO_CUT_VIDEO_THUMBNAIL,
+            orientation: "portrait",
+            overview:
+              "A vertical dirt-bike adventure edit featuring off-road forest trails, cliff jumps, and beach rides, cut for the Shorts feed.",
+            specs: [
+              { label: "Aspect Ratio", value: "9:16" },
+              { label: "Format", value: "MP4, YouTube Short" },
+            ],
+            pipeline: [
+              "Adventure footage selection and sequencing",
+              "Vertical action edit with cinematic pacing",
+              "Colour and sound treatment for an immersive ride experience",
+            ],
+            youtubeUrl: `https://youtube.com/shorts/${DIRT_BIKE_PORTFOLIO_CUT_VIDEO_ID}`,
+          },
+        },
         {
           id: "ai-promo-video",
           // Exact title from the YouTube oEmbed API (fetched live, not guessed) — short enough
@@ -145,6 +184,33 @@ export const motionReelsPage: PortfolioPage = {
               "Rhythmic edit designed for mobile viewing",
             ],
             youtubeUrl: `https://youtube.com/shorts/${PERSONAL_BRAND_INTRO_VIDEO_ID}`,
+          },
+        },
+        {
+          id: "smart-electric-toothbrush-ad",
+          title: "AI-Generated Product Ad — Smart Electric Toothbrush Concept",
+          thumbnail: SMART_TOOTHBRUSH_AD_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "9:16 video", type: "text" },
+            { label: "Platform", value: "YouTube Shorts", type: "text" },
+          ],
+          videoBoard: {
+            videoId: SMART_TOOTHBRUSH_AD_VIDEO_ID,
+            videoTitle: "AI-Generated Product Ad — Smart Electric Toothbrush Concept",
+            thumbnail: SMART_TOOTHBRUSH_AD_VIDEO_THUMBNAIL,
+            orientation: "portrait",
+            overview:
+              "A vertical AI-generated product advertisement concept for a smart electric toothbrush, edited for a concise, product-focused Shorts format.",
+            specs: [
+              { label: "Aspect Ratio", value: "9:16" },
+              { label: "Format", value: "MP4, YouTube Short" },
+            ],
+            pipeline: [
+              "AI-generated product concept",
+              "Vertical product-ad edit for mobile viewing",
+              "Motion-led presentation and product-focused pacing",
+            ],
+            youtubeUrl: `https://youtube.com/shorts/${SMART_TOOTHBRUSH_AD_VIDEO_ID}`,
           },
         },
       ],
