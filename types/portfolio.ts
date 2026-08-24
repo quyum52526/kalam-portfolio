@@ -143,6 +143,10 @@ export interface PortfolioItem {
   /** Optional video-reel view (player, overview, specs, pipeline, watch link). Mutually
    *  exclusive with `brandBoard` — DetailsModal checks videoBoard first. */
   videoBoard?: VideoBoard;
+  /** Web Experiences items only. Deployed project URL — rendered as a "Live Preview"
+   *  external link on both the card and the details modal. Omit for items with no live
+   *  deployment. */
+  liveUrl?: string;
 }
 
 export interface PortfolioCategory {

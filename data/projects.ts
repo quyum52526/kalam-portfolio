@@ -216,10 +216,24 @@ export const projects: Project[] = [
     id: "match-media",
     title: "Match Media",
     category: "frontend",
-    tags: ["Next.js", "TypeScript", "Framer Motion"],
-    description: "Interactive frontend build — live project walkthrough.",
+    tags: ["Next.js", "React", "Tailwind CSS"],
+    description:
+      "A modern matrimonial and matchmaking web platform interface built with Next.js and Tailwind CSS.",
     videoUrl: "",
-    thumbnailUrl: "",
+    thumbnailUrl: "/all-featured-portfolio/web-dev/match-media.png",
+    imageUrl: "/all-featured-portfolio/web-dev/match-media.png",
     liveUrl: "https://match-media.vercel.app/en",
+  },
+  {
+    id: "kalam-portfolio",
+    title: "Personal AI & Creative Portfolio",
+    category: "frontend",
+    tags: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
+    description:
+      "Interactive personal portfolio built with Next.js, React, and Tailwind CSS featuring dynamic motion engines, dark-themed UI, and generative AI showcases.",
+    videoUrl: "",
+    thumbnailUrl: "/all-featured-portfolio/web-dev/kalam-portfolio.png",
+    imageUrl: "/all-featured-portfolio/web-dev/kalam-portfolio.png",
+    liveUrl: "https://kalam-portfolio-phi.vercel.app",
   },
 ];

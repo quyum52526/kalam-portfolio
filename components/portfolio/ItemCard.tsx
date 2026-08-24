@@ -1,3 +1,4 @@
+import { ExternalLink } from "lucide-react";
 import type { PortfolioItem } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -41,6 +42,10 @@ export function ItemCard({
   // the plain fill-and-crop path below, same as flat logo/product thumbnails.
   const isBrandBoardMockup = Boolean(item.brandBoard);
   const isPortraitMockup = item.brandBoard?.heroLayout === "photo";
+  // Web Experiences thumbnails are full-page site screenshots — ultra-tall relative to
+  // their card, so a center crop mostly shows empty below-the-fold space. object-top
+  // anchors the crop to the hero section at the top of the page instead.
+  const isWebScreenshot = Boolean(item.liveUrl) && !isBrandBoardMockup;
 
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-border bg-surface">
@@ -58,7 +63,9 @@ export function ItemCard({
                 ? "object-cover"
                 : isBrandBoardMockup
                   ? "object-contain"
-                  : "object-cover"
+                  : isWebScreenshot
+                    ? "object-cover object-top"
+                    : "object-cover"
             )}
           />
         ) : (
@@ -77,13 +84,27 @@ export function ItemCard({
         {/* py-3.5 (was py-1) brings the tappable height to 46px (>=44px minimum);
             -my-2.5 cancels the added padding in the margin box so the footer row's
             own height stays the same as before. */}
-        <button
-          type="button"
-          onClick={onOpenDetails}
-          className="-my-2.5 shrink-0 rounded-full border border-border-strong px-3 py-3.5 text-xs font-medium text-text-body transition-colors hover:bg-surface-card"
-        >
-          Details
-        </button>
+        <div className="-my-2.5 flex shrink-0 items-center gap-2">
+          {item.liveUrl && (
+            <a
+              href={item.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Live preview of ${item.title}`}
+              onClick={(e) => e.stopPropagation()}
+              className="rounded-full border border-border-strong p-2.5 text-text-body transition-colors hover:bg-surface-card"
+            >
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={onOpenDetails}
+            className="rounded-full border border-border-strong px-3 py-3.5 text-xs font-medium text-text-body transition-colors hover:bg-surface-card"
+          >
+            Details
+          </button>
+        </div>
       </div>
     </div>
   );

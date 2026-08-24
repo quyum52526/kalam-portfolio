@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { ExternalLink, X } from "lucide-react";
 import type { DetailField, PortfolioItem } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 import { BrandBoardSection } from "./BrandBoardSection";
@@ -104,7 +104,7 @@ export function DetailsModal({
             <button
               onClick={onClose}
               aria-label="Close"
-              className="absolute right-4 top-4 z-10 rounded-full bg-surface-inset/50 p-2 text-text-body transition-colors hover:bg-surface-inset/70"
+              className="absolute right-4 top-4 z-50 rounded-full bg-surface-inset/50 p-2 text-text-body transition-colors hover:bg-surface-inset/70"
             >
               <X className="h-4 w-4" />
             </button>
@@ -118,29 +118,43 @@ export function DetailsModal({
                 <BrandBoardSection board={item.brandBoard} title={item.title} />
               </div>
             ) : (
-              <>
+              // Single scroll region for both the preview and the details below it — a
+              // full-page site screenshot (item.liveUrl) renders at its natural aspect
+              // ratio (w-full h-auto) rather than being squeezed into a fixed-height box,
+              // so it can run far taller than this max-height and needs its own scroll.
+              <div className="max-h-[75vh] overflow-y-auto scrollbar-thin scroll-smooth">
                 {item.thumbnail && item.thumbnail !== "GAP" && (
-                  <div className="relative aspect-video w-full bg-surface-inset">
-                    {/* eslint-disable-next-line @next/next/no-img-element -- thumbnails may be remote URLs */}
-                    <img
-                      src={item.thumbnail}
-                      alt={item.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 h-full w-full object-contain"
-                    />
-                  </div>
+                  // eslint-disable-next-line @next/next/no-img-element -- thumbnails may be remote URLs
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-auto w-full bg-surface-inset"
+                  />
                 )}
 
-                <div className="max-h-[70vh] overflow-y-auto p-6">
+                <div className="p-6">
                   <h3 className="text-xl font-semibold">{item.title}</h3>
                   <div className="mt-4">
                     {item.details.map((field, i) => (
                       <DetailFieldRow key={i} field={field} />
                     ))}
                   </div>
+
+                  {item.liveUrl && (
+                    <a
+                      href={item.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border-strong px-5 text-sm font-semibold text-text-body transition-colors hover:bg-surface-card"
+                    >
+                      Live Preview
+                      <ExternalLink className="h-4 w-4" aria-hidden />
+                    </a>
+                  )}
                 </div>
-              </>
+              </div>
             )}
           </motion.div>
         </motion.div>
