@@ -2,11 +2,11 @@ import { getCategoryBySlug } from "@/data/categories";
 import { getPortfolioPageBySlug } from "@/lib/portfolio";
 import { applyFeaturedToPage, type FeaturedMap } from "@/lib/featured";
 import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
-import { FlatGallery } from "@/components/portfolio/FlatGallery";
+import { ProductionWorkflow } from "@/components/ProductionWorkflow";
 
 /** Single source of truth for one category's full page content: heading + description,
- *  its top section (grouped, with Details buttons on each item), and its bottom flat
- *  "All <Category> Work" grid — exactly what /work/<slug> renders below its WorkTabs
+ *  its top section (grouped, with Details buttons on each item), and the shared
+ *  ProductionWorkflow block — exactly what /work/<slug> renders below its WorkTabs
  *  nav. Used by /work/[category]/page.tsx (server-rendered) and by the home page's
  *  per-category chip view (client-rendered) — see that file for why no "use client" is
  *  needed here for either context. Callers own 404-handling (next/navigation's
@@ -51,12 +51,7 @@ export function CategoryPageContent({
             ))}
           </div>
 
-          <div className="mt-4">
-            <h2 className="mb-6 text-xl font-semibold tracking-tight sm:text-2xl">
-              All {category.label} Work
-            </h2>
-            <FlatGallery items={portfolioPage.allWork} />
-          </div>
+          <ProductionWorkflow />
         </>
       )}
     </>

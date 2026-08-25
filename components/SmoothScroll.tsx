@@ -24,6 +24,15 @@ export default function SmoothScroll({
       // desynced from real wheel input until it settles. stopInertiaOnNavigate kills that
       // momentum the moment an internal link is clicked, so the new page starts clean.
       stopInertiaOnNavigate: true,
+      // Without this, Lenis hijacks every wheel/touch event on window for its own smooth
+      // scroll — including ones over a genuinely scrollable descendant (e.g. the Details
+      // modal's internal preview, or any future horizontal card/carousel with its own
+      // overflow-x). allowNestedScroll makes Lenis check whether the hovered element can
+      // still scroll on its own before taking over: mid-scroll it lets that element's
+      // native scroll happen, and once that element hits its edge, native scroll-chaining
+      // passes the rest of the gesture up to the page — so vertical wheel scroll always
+      // keeps working over any card, without needing a data-lenis-prevent on each one.
+      allowNestedScroll: true,
     });
     window.__lenis = lenis;
 
