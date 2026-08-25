@@ -66,6 +66,30 @@ export const webExperiencesPage: PortfolioPage = {
             },
           ],
         },
+        {
+          id: "tech-bites-paypulse",
+          title: "Tech Bites PayPulse",
+          thumbnail: `${WEB_DEV_DIR}/tech-bites-paypulse.png`,
+          liveUrl: "https://tech-bites-paypulse.vercel.app",
+          details: [
+            {
+              label: "Description",
+              value:
+                "Payroll & Attendance Dashboard built for Meghna Apparels Ltd. — a Next.js/React web app for managing staff attendance and payroll processing.",
+              type: "paragraph",
+            },
+            {
+              label: "Live URL",
+              value: "https://tech-bites-paypulse.vercel.app",
+              type: "text",
+            },
+            {
+              label: "Tech Stack",
+              value: "Next.js, React",
+              type: "text",
+            },
+          ],
+        },
       ],
     },
   ],

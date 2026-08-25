@@ -8,6 +8,10 @@ const RF_TEQ_DIR = "/all-featured-portfolio/featurd-logo/RF-TEQ";
 
 const RELENTAIL_DIR = "/all-featured-portfolio/featurd-logo/Relentail";
 
+const TOIMOR_DIR = "/all-featured-portfolio/featurd-logo/Toimor";
+const PALESTRA_DIR = "/all-featured-portfolio/featurd-logo/PALESTRA";
+const CASTLEDARCY_DIR = "/all-featured-portfolio/featurd-logo/Castledarcy";
+
 // Folder is "LMT-Agro" (capital A); the files inside are "LMT-agro-" (lowercase a) — kept
 // exactly as they exist on disk, since Vercel deploys to a case-sensitive filesystem.
 const LMT_AGRO_DIR = "/all-featured-portfolio/featurd-logo/LMT-Agro";
@@ -324,34 +328,133 @@ export const brandingVisualsPage: PortfolioPage = {
         {
           id: "toimor-engineering-logo",
           title: "Toimor Engineering",
-          thumbnail:
-            "/all-featured-portfolio/featurd-logo/Toimor/Toimor Engineering-LOGO-Mockup.png",
-          // Only the mockup image was supplied — no brand PDF/colour palette/font spec like the
-          // other Logo Design entries have, so those stay GAP rather than guessed. No brandBoard
-          // either, for the same reason: BrandBoard.palette is a required field, and fabricating
-          // hex codes isn't an option here.
+          thumbnail: `${TOIMOR_DIR}/Toimor Engineering-LOGO-Mockup.png`,
           details: [
-            { label: "Alternate Logo", value: "GAP", type: "image" },
-            { label: "Brand Color", value: "GAP", type: "color" },
+            {
+              label: "Alternate Logo",
+              value: `${TOIMOR_DIR}/Toimor Engineering-LOGO-png.png`,
+              type: "image",
+            },
+            { label: "Brand Color", value: "#0077C8", type: "color" },
+            // No typeface is named anywhere on the mockup (just generic UI sans for the VISION
+            // label) — stays GAP rather than guessed, unlike the colours/copy below, which are
+            // all directly legible text/swatches baked into the mockup itself.
             { label: "Typography", value: "GAP", type: "text" },
             { label: "Complementary Background", value: "GAP", type: "color" },
           ],
+          brandBoard: {
+            // Verbatim from the mockup's own wordmark ("TOIMOR ENGINEERING GYM").
+            tagline: "ENGINEERING GYM",
+            hero: {
+              image: `${TOIMOR_DIR}/Toimor Engineering-LOGO.png`,
+              alt: "Toimor Engineering primary logo lockup",
+            },
+            // Confirmed via alpha-channel check (Python/Pillow), not assumed from how the tool
+            // renders it: this PNG has real transparency, not a baked-in white canvas. The
+            // "ENGINEERING" subline is set in a charcoal close to darkestOf(palette) (#4A4D4D) —
+            // overridden to this brand's own lightest entry to keep it legible.
+            heroBg: "#A6A6A6",
+            logoOptions: {
+              // "-LOGO-png.png" is a second, distinct export of the full shield+wordmark
+              // lockup (confirmed by opening it) — a genuine second full lockup, not a re-use
+              // of the hero file under a different name.
+              alternateLockup: `${TOIMOR_DIR}/Toimor Engineering-LOGO-png.png`,
+              icon: null,
+            },
+            moodBoard: [`${TOIMOR_DIR}/Toimor Engineering-LOGO-Mockup.png`],
+            // Verbatim from the mockup's own printed swatches — confirmed by opening the file
+            // and reading the hex text directly under each square.
+            palette: ["#0077C8", "#4A4D4D", "#A6A6A6"],
+            // No typeface is named on the mockup — Fonts row omitted rather than guessed.
+            rules: ["Development", "Creative", "Innovation"],
+          },
         },
         {
           id: "palestra-combat-club-logo",
           title: "Palestra Combat Club",
-          thumbnail: "/all-featured-portfolio/featurd-logo/PALESTRA/PALESTRA.png",
-          // Same situation as Toimor Engineering above: only the mark itself was supplied, no
-          // brand PDF/palette/font spec — GAP rather than guessed, no brandBoard (its palette
-          // field is required, not optional). PALESTRA-logo.png and PALESTRA.svg also exist in
-          // this asset folder but weren't specified as the thumbnail — left unused rather than
-          // assumed to be an alternate lockup.
+          thumbnail: `${PALESTRA_DIR}/PALESTRA.png`,
           details: [
+            // No second full lockup or icon-only file exists in this folder — PALESTRA.svg is
+            // the same badge composition as the PNG hero (opened directly to confirm), not a
+            // distinct asset, so this stays a real GAP rather than a re-used file.
             { label: "Alternate Logo", value: "GAP", type: "image" },
-            { label: "Brand Color", value: "GAP", type: "color" },
+            { label: "Brand Color", value: "#0077C8", type: "color" },
             { label: "Typography", value: "GAP", type: "text" },
             { label: "Complementary Background", value: "GAP", type: "color" },
           ],
+          brandBoard: {
+            // Verbatim from the badge artwork itself: "RULE THE CHAOS" (ribbon) + "SAN JOSE,
+            // CALIFORNIA" (caption below it).
+            tagline: "RULE THE CHAOS — SAN JOSE, CALIFORNIA",
+            hero: {
+              image: `${PALESTRA_DIR}/PALESTRA-logo.png`,
+              alt: "Palestra Combat Club primary badge mark",
+            },
+            // Confirmed via alpha-channel check: real transparency, not baked-in white. Unlike
+            // Toimor's, this mark is entirely monochrome (black/white/grey ink, no blue at all
+            // — the blue only appears in the surrounding mockup template's own chrome, not the
+            // badge). A black-on-charcoal badge over darkestOf(palette) (#4A4D4D, itself a
+            // mid-grey close to the badge's own tonal range) would wash out its linework, so
+            // this is overridden to the brand's own lightest entry for contrast.
+            heroBg: "#A6A6A6",
+            logoOptions: {
+              alternateLockup: null,
+              icon: null,
+            },
+            moodBoard: [`${PALESTRA_DIR}/PALESTRA.png`],
+            // Same three swatches as Toimor Engineering's mockup, verbatim from this mockup's
+            // own printed hex text — both boards were generated from the same template, and
+            // this one happens to keep the identical palette (flagged, not an error on my
+            // part: confirmed by opening both files and reading the printed codes directly).
+            palette: ["#0077C8", "#4A4D4D", "#A6A6A6"],
+            // Not restated in the brief for this brand, but confirmed present verbatim on
+            // Palestra's own mockup — the same three pillar labels as Toimor's board.
+            rules: ["Development", "Creative", "Innovation"],
+          },
+        },
+        {
+          id: "castledarcy-christmas-trees-logo",
+          title: "Castledarcy Christmas Trees",
+          thumbnail: `${CASTLEDARCY_DIR}/Castledarcy-Christmas-trees-Logo.jpg`,
+          details: [
+            {
+              label: "Alternate Logo",
+              value: `${CASTLEDARCY_DIR}/Castledarcy-Christmas-trees-Icon.png`,
+              type: "image",
+            },
+            // First of the three verified swatches below — see brandBoard.palette for the
+            // source-vs-brief discrepancy note.
+            { label: "Brand Color", value: "#2E633C", type: "color" },
+            { label: "Typography", value: "GAP", type: "text" },
+            { label: "Complementary Background", value: "GAP", type: "color" },
+          ],
+          brandBoard: {
+            // Verbatim from the mockup's own subline, printed directly under the
+            // "CASTLEDARCY CHRISTMAS TREES" wordmark.
+            tagline: "CHRISTMAS TREES FARM",
+            hero: {
+              image: `${CASTLEDARCY_DIR}/Castledarcy-Christmas-trees-Logo.png`,
+              alt: "Castledarcy Christmas Trees primary logo lockup",
+            },
+            // Confirmed via alpha-channel check: real transparency. The tree is a forest green
+            // close to darkestOf(palette) (#2E633C) — overridden to the brand's own lightest
+            // entry so the tree doesn't wash into the hero band.
+            heroBg: "#FFD700",
+            logoOptions: {
+              alternateLockup: null,
+              // "-Icon.png" is the truck+tree+star mark alone, no wordmark, no ring border —
+              // confirmed by opening it directly, a genuine icon-only file.
+              icon: `${CASTLEDARCY_DIR}/Castledarcy-Christmas-trees-Icon.png`,
+            },
+            moodBoard: [`${CASTLEDARCY_DIR}/Castledarcy-Christmas-trees-Logo.jpg`],
+            // Read directly off the mockup's own printed swatches, not the brief: the brief
+            // gave #2E6D3C/#C0383C for the green/red, but the mockup itself prints #2E633C/
+            // #E03B3C under its swatches (confirmed by opening the file — same pattern as
+            // every other brand board in this file, source asset wins, flagged not silently
+            // reconciled). Gold matches exactly either way.
+            palette: ["#2E633C", "#E03B3C", "#FFD700"],
+            rules: ["Growth", "Design", "Quality"],
+          },
         },
       ],
     },
