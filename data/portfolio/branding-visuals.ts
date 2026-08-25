@@ -321,6 +321,38 @@ export const brandingVisualsPage: PortfolioPage = {
             ],
           },
         },
+        {
+          id: "toimor-engineering-logo",
+          title: "Toimor Engineering",
+          thumbnail:
+            "/all-featured-portfolio/featurd-logo/Toimor/Toimor Engineering-LOGO-Mockup.png",
+          // Only the mockup image was supplied — no brand PDF/colour palette/font spec like the
+          // other Logo Design entries have, so those stay GAP rather than guessed. No brandBoard
+          // either, for the same reason: BrandBoard.palette is a required field, and fabricating
+          // hex codes isn't an option here.
+          details: [
+            { label: "Alternate Logo", value: "GAP", type: "image" },
+            { label: "Brand Color", value: "GAP", type: "color" },
+            { label: "Typography", value: "GAP", type: "text" },
+            { label: "Complementary Background", value: "GAP", type: "color" },
+          ],
+        },
+        {
+          id: "palestra-combat-club-logo",
+          title: "Palestra Combat Club",
+          thumbnail: "/all-featured-portfolio/featurd-logo/PALESTRA/PALESTRA.png",
+          // Same situation as Toimor Engineering above: only the mark itself was supplied, no
+          // brand PDF/palette/font spec — GAP rather than guessed, no brandBoard (its palette
+          // field is required, not optional). PALESTRA-logo.png and PALESTRA.svg also exist in
+          // this asset folder but weren't specified as the thumbnail — left unused rather than
+          // assumed to be an alternate lockup.
+          details: [
+            { label: "Alternate Logo", value: "GAP", type: "image" },
+            { label: "Brand Color", value: "GAP", type: "color" },
+            { label: "Typography", value: "GAP", type: "text" },
+            { label: "Complementary Background", value: "GAP", type: "color" },
+          ],
+        },
       ],
     },
     {
