@@ -25,6 +25,7 @@ export function HomeCategoryFeature({
 }) {
   const [selected, setSelected] = useState<PortfolioItem | null>(null);
   const featured = typeof limit === "number" ? items.slice(0, limit) : items;
+  const isWebExperiences = category.slug === "web-experiences";
 
   return (
     <section className="mb-14">
@@ -48,7 +49,13 @@ export function HomeCategoryFeature({
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div
+        className={
+          isWebExperiences
+            ? "grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+            : "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        }
+      >
         {featured.map((item) => (
           <ItemCard
             key={item.id}

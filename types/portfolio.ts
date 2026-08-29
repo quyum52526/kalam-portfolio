@@ -128,6 +128,10 @@ export interface VideoBoard {
 export interface PortfolioItem {
   id: string;
   title: string;
+  /** Short category/subtitle shown beneath the title on card tiles. */
+  tagline?: string;
+  /** Micro-description shown beneath the title on card tiles for concise context. */
+  description?: string;
   thumbnail: string;
   /** Pin state for the Feature/Pin admin system — NOT set in the static data files.
    *  Populated at render time by lib/featured.ts from the KV-backed featured map, then

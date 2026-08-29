@@ -48,8 +48,8 @@ export function ItemCard({
   const isWebScreenshot = Boolean(item.liveUrl) && !isBrandBoardMockup;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-border bg-surface">
-      <div className={cn("relative w-full bg-surface-inset", ASPECT_RATIO_CLASS[aspectRatio])}>
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-950/70 shadow-[0_12px_35px_rgba(15,23,42,0.22)]">
+      <div className="relative w-full overflow-hidden rounded-t-2xl bg-surface-inset">
         {hasRealThumbnail(item.thumbnail) ? (
           // eslint-disable-next-line @next/next/no-img-element -- thumbnails may be remote (e.g. YouTube) URLs
           <img
@@ -58,7 +58,8 @@ export function ItemCard({
             loading="lazy"
             decoding="async"
             className={cn(
-              "absolute inset-0 h-full w-full",
+              "h-full w-full object-cover object-top",
+              ASPECT_RATIO_CLASS[aspectRatio],
               isPortraitMockup
                 ? "object-cover"
                 : isBrandBoardMockup
@@ -69,42 +70,59 @@ export function ItemCard({
             )}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-card to-transparent p-2 text-center text-xs text-muted">
+          <div
+            className={cn(
+              "flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-card to-transparent p-2 text-center text-xs text-muted",
+              ASPECT_RATIO_CLASS[aspectRatio]
+            )}
+          >
             No preview
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between gap-2 p-3">
-        {/* line-clamp-2 (not truncate/nowrap) so a title too long for one line wraps onto a
-            second instead of ellipsis-cutting mid-word — a short title like "RF-TEQ" or
-            "LMT Agro" still renders as a single line exactly as before, since the clamp only
-            engages when content would otherwise overflow. min-w-0 lets the paragraph actually
-            shrink within the flex row instead of pushing against the Details button. */}
-        <p className="line-clamp-2 min-w-0 text-sm font-medium">{item.title}</p>
-        {/* py-3.5 (was py-1) brings the tappable height to 46px (>=44px minimum);
-            -my-2.5 cancels the added padding in the margin box so the footer row's
-            own height stays the same as before. */}
-        <div className="-my-2.5 flex shrink-0 items-center gap-2">
-          {item.liveUrl && (
-            <a
-              href={item.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Live preview of ${item.title}`}
-              onClick={(e) => e.stopPropagation()}
-              className="rounded-full border border-border-strong p-2.5 text-text-body transition-colors hover:bg-surface-card"
-            >
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-            </a>
+
+      <div className="flex w-full flex-col gap-2.5 p-5">
+        <div className="flex w-full items-center justify-between gap-2">
+          {item.tagline ? (
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.18em] text-emerald-400/90">
+              {item.tagline}
+            </span>
+          ) : (
+            <span className="w-0" aria-hidden="true" />
           )}
-          <button
-            type="button"
-            onClick={onOpenDetails}
-            className="rounded-full border border-border-strong px-3 py-3.5 text-xs font-medium text-text-body transition-colors hover:bg-surface-card"
-          >
-            Details
-          </button>
+
+          <div className="flex shrink-0 items-center gap-2">
+            {item.liveUrl && (
+              <a
+                href={item.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Live preview of ${item.title}`}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 text-slate-200 transition-colors hover:border-slate-500 hover:bg-slate-800"
+              >
+                <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+              </a>
+            )}
+            <button
+              type="button"
+              onClick={onOpenDetails}
+              className="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs font-medium text-slate-100 transition-colors hover:border-slate-500 hover:bg-slate-800"
+            >
+              Details
+            </button>
+          </div>
         </div>
+
+        <h3 className="w-full truncate text-lg font-bold tracking-tight text-white md:text-xl">
+          {item.title}
+        </h3>
+
+        {item.description && (
+          <p className="w-full text-xs leading-relaxed text-slate-400 line-clamp-2 md:text-sm">
+            {item.description}
+          </p>
+        )}
       </div>
     </div>
   );

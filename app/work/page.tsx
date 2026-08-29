@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import type { PortfolioPageId } from "@/types/portfolio";
-import { WorkTabs } from "@/components/WorkTabs";
 import { getCategoryBySlug } from "@/data/categories";
 import { HomeCategoryFeature } from "@/components/portfolio/HomeCategoryFeature";
 import { portfolioPages } from "@/lib/portfolio";
@@ -34,9 +33,7 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
-      <WorkTabs />
-
+    <section className="mx-auto max-w-6xl px-6 pb-12 pt-28 sm:pt-32">
       <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
         All Work
       </h1>

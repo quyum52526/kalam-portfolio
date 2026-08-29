@@ -2,7 +2,6 @@ import { getCategoryBySlug } from "@/data/categories";
 import { getPortfolioPageBySlug } from "@/lib/portfolio";
 import { applyFeaturedToPage, type FeaturedMap } from "@/lib/featured";
 import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
-import { FlatGallery } from "@/components/portfolio/FlatGallery";
 
 /** Single source of truth for one category's full page content: heading + description,
  *  its top section (grouped, with Details buttons on each item), and its bottom flat
@@ -44,20 +43,11 @@ export function CategoryPageContent({
       <p className="mt-3 max-w-2xl text-muted">{category.description}</p>
 
       {portfolioPage && (
-        <>
-          <div className="mt-12">
-            {portfolioPage.categories.map((cat) => (
-              <PortfolioCategorySection key={cat.id} category={cat} />
-            ))}
-          </div>
-
-          <div className="mt-4">
-            <h2 className="mb-6 text-xl font-semibold tracking-tight sm:text-2xl">
-              All {category.label} Work
-            </h2>
-            <FlatGallery items={portfolioPage.allWork} />
-          </div>
-        </>
+        <div className="mt-12">
+          {portfolioPage.categories.map((cat) => (
+            <PortfolioCategorySection key={cat.id} category={cat} />
+          ))}
+        </div>
       )}
     </>
   );

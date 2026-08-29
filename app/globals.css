@@ -250,7 +250,13 @@
   --radius-xl: var(--radius-xl);
 }
 
+html {
+  min-height: 100%;
+  scroll-behavior: auto;
+}
+
 body {
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);

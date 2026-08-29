@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { getCategoryBySlug } from "@/data/categories";
 import type { PortfolioPageId } from "@/types/portfolio";
 import { portfolioPages } from "@/lib/portfolio";
@@ -37,6 +38,9 @@ export function HomeFeaturedWork({
   featuredMap?: FeaturedMap;
 }) {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const pathname = usePathname();
+
+  if (pathname !== "/") return null;
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">

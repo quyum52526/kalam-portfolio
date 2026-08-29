@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { workCategories, getCategoryBySlug } from "@/data/categories";
 import { getFeaturedMap } from "@/lib/featured-store";
-import { WorkTabs } from "@/components/WorkTabs";
 import { CategoryPageContent } from "@/components/portfolio/CategoryPageContent";
 
 type Params = { category: string };
@@ -49,9 +48,7 @@ export default async function WorkCategoryPage({
   const featuredMap = await getFeaturedMap();
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
-      <WorkTabs activeSlug={category.slug} />
-
+    <section className="mx-auto max-w-6xl px-6 pb-12 pt-28 sm:pt-32">
       <CategoryPageContent slug={category.slug} featuredMap={featuredMap} />
     </section>
   );

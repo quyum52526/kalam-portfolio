@@ -17,6 +17,7 @@ export default function SmoothScroll({
   useEffect(() => {
     const lenis = new Lenis({
       autoRaf: true,
+      autoResize: true,
       // Next.js App Router navigation via <Link> doesn't reload the page — Lenis persists
       // across the route change (it lives in the root layout, which never remounts), but
       // without this, any wheel-driven momentum still in flight when a link is clicked
@@ -25,9 +26,24 @@ export default function SmoothScroll({
       // momentum the moment an internal link is clicked, so the new page starts clean.
       stopInertiaOnNavigate: true,
     });
+
+    const refreshScroll = () => {
+      lenis.resize();
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      refreshScroll();
+    });
+
+    resizeObserver.observe(document.body);
+    window.addEventListener("resize", refreshScroll);
+    window.addEventListener("orientationchange", refreshScroll);
     window.__lenis = lenis;
 
     return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", refreshScroll);
+      window.removeEventListener("orientationchange", refreshScroll);
       window.__lenis = undefined;
       lenis.destroy();
     };
