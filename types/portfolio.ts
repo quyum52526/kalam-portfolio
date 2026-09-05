@@ -151,6 +151,8 @@ export interface PortfolioItem {
    *  external link on both the card and the details modal. Omit for items with no live
    *  deployment. */
   liveUrl?: string;
+  /** Optional labelled card action for selected live projects. Omit to keep the default icon action. */
+  linkLabel?: string;
 }
 
 export interface PortfolioCategory {

@@ -26,6 +26,7 @@ export const webExperiencesPage: PortfolioPage = {
             "Multi-level verified matchmaking platform with consent-based photo reveals and encrypted communication.",
           thumbnail: `${WEB_DEV_DIR}/match-media.png`,
           liveUrl: "https://match-media.vercel.app/en",
+          linkLabel: "Live Demo",
           details: [
             {
               label: "Description",
@@ -53,6 +54,7 @@ export const webExperiencesPage: PortfolioPage = {
             "Interactive portfolio highlighting brand identity systems, AI video workflows, and web development.",
           thumbnail: `${WEB_DEV_DIR}/kalam-portfolio.png`,
           liveUrl: "https://kalam-portfolio-phi.vercel.app",
+          linkLabel: "Live Demo",
           details: [
             {
               label: "Description",
@@ -80,6 +82,7 @@ export const webExperiencesPage: PortfolioPage = {
             "Automated workforce platform for real-time attendance tracking, payroll processing, and salary disbursement.",
           thumbnail: `${WEB_DEV_DIR}/tech-bites-paypulse.png`,
           liveUrl: "https://tech-bites-paypulse.vercel.app",
+          linkLabel: "Live Demo",
           details: [
             {
               label: "Description",
@@ -95,6 +98,45 @@ export const webExperiencesPage: PortfolioPage = {
             {
               label: "Tech Stack",
               value: "Next.js, React",
+              type: "text",
+            },
+          ],
+        },
+        {
+          id: "bitepos",
+          title: "BitePOS",
+          tagline: "MULTI-TENANT POS SAAS",
+          description:
+            "Multi-tenant point-of-sale platform with company and branch management, per-company module entitlements, and a super-admin control panel.",
+          thumbnail: `${WEB_DEV_DIR}/bitepos.png`,
+          liveUrl: "https://bitepos-rho.vercel.app/login",
+          linkLabel: "Live Demo",
+          details: [
+            {
+              label: "Overview",
+              value:
+                "A multi-tenant POS product for retail and super-shop businesses, where the platform owner provisions companies and switches features on per company. A read-only demo is available from the login page.",
+              type: "paragraph",
+            },
+            {
+              label: "Key Features",
+              value:
+                "Multi-tenant structure: companies, branches, and per-company module entitlements\nTwo access levels: tenant ADMIN and platform SUPER_ADMIN\nSuper Admin portal at /super-admin — Tenants, Company Modules, Users, Audit Log, Permissions, with tenant-only header controls hidden in platform mode\nCompany Modules page: company picker, quick presets (Basic Retail / Super Shop / Manufacturing) and per-module toggles (Accounting, Advanced Reports, Stock Transfers, Production & Repackaging, Marketing & Loyalty)",
+              type: "paragraph",
+            },
+            {
+              label: "Role",
+              value: "Solo — product design, full build and deployment.",
+              type: "text",
+            },
+            {
+              label: "Live URL",
+              value: "https://bitepos-rho.vercel.app/login",
+              type: "text",
+            },
+            {
+              label: "Tech Stack",
+              value: "Next.js (App Router), TypeScript, Prisma, Neon Postgres, NextAuth, Vercel",
               type: "text",
             },
           ],
