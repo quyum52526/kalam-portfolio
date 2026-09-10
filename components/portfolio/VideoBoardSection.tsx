@@ -119,18 +119,21 @@ export function VideoBoardSection({
         </ul>
       </div>
 
-      {/* Row 5 — Watch on YouTube */}
-      <div className={cn("flex justify-center border-t border-border bg-surface-inset", BLOCK_PADDING)}>
-        <a
-          href={board.youtubeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border-strong px-5 text-sm font-semibold text-text-body transition-colors hover:bg-surface-card"
-        >
-          Watch on YouTube
-          <ExternalLink className="h-4 w-4" aria-hidden />
-        </a>
-      </div>
+      {/* Row 5 — Watch on YouTube. Skipped when youtubeUrl is absent (e.g. the video has been
+          taken down) so no dead link is rendered. */}
+      {board.youtubeUrl ? (
+        <div className={cn("flex justify-center border-t border-border bg-surface-inset", BLOCK_PADDING)}>
+          <a
+            href={board.youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border-strong px-5 text-sm font-semibold text-text-body transition-colors hover:bg-surface-card"
+          >
+            Watch on YouTube
+            <ExternalLink className="h-4 w-4" aria-hidden />
+          </a>
+        </div>
+      ) : null}
     </div>
   );
 }

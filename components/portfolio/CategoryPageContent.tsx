@@ -1,6 +1,7 @@
 import { getCategoryBySlug } from "@/data/categories";
 import { getPortfolioPageBySlug } from "@/lib/portfolio";
 import { applyFeaturedToPage, type FeaturedMap } from "@/lib/featured";
+import { mergeCmsItemsIntoPage, type CmsItemForMerge } from "@/lib/cms";
 import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCategorySection";
 
 /** Single source of truth for one category's full page content: heading + description,
@@ -18,22 +19,34 @@ import { PortfolioCategorySection } from "@/components/portfolio/PortfolioCatego
  *  renders exactly as before the Feature/Pin system existed. When passed, it's already-
  *  fetched data (lib/featured-store.ts's KV read happens in the caller, once, server-side)
  *  — applying it here is pure sorting, which is why this component can stay synchronous
- *  and keep working from both a Server Component and a "use client" one. */
+ *  and keep working from both a Server Component and a "use client" one.
+ *
+ *  `cmsEntries` is likewise optional and purely additive: admin-uploaded items (lib/cms-store.ts's
+ *  Supabase read happens in the caller, once, server-side) get merged into their matching
+ *  existing group — or a newly created one, named after whatever the admin typed, only when no
+ *  existing group matches — via lib/cms.ts's mergeCmsItemsIntoPage, which is a no-op when the
+ *  list is empty. So a category with no uploads yet renders exactly as before this system
+ *  existed. */
 export function CategoryPageContent({
   slug,
   featuredMap,
+  cmsEntries,
 }: {
   slug: string;
   featuredMap?: FeaturedMap;
+  cmsEntries?: CmsItemForMerge[];
 }) {
   const category = getCategoryBySlug(slug);
   if (!category) return null;
 
   const rawPortfolioPage = getPortfolioPageBySlug(slug);
+  const withCmsItems = rawPortfolioPage
+    ? mergeCmsItemsIntoPage(rawPortfolioPage, cmsEntries ?? [])
+    : rawPortfolioPage;
   const portfolioPage =
-    rawPortfolioPage && featuredMap
-      ? applyFeaturedToPage(rawPortfolioPage, featuredMap)
-      : rawPortfolioPage;
+    withCmsItems && featuredMap
+      ? applyFeaturedToPage(withCmsItems, featuredMap)
+      : withCmsItems;
 
   return (
     <>

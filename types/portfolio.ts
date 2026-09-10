@@ -121,8 +121,10 @@ export interface VideoBoard {
   orientation?: "landscape" | "portrait";
   /** Canonical https://youtu.be/... or https://www.youtube.com/watch?v=... link for the
    *  "Watch on YouTube" outbound link — deliberately not derived from videoId at render time,
-   *  so a future item can point at a URL shape the ID alone wouldn't reconstruct. */
-  youtubeUrl: string;
+   *  so a future item can point at a URL shape the ID alone wouldn't reconstruct. Omit (or
+   *  leave empty) when the video has been taken down — the "Watch on YouTube" link is then
+   *  not rendered. */
+  youtubeUrl?: string;
 }
 
 export interface PortfolioItem {

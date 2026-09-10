@@ -1,12 +1,6 @@
 import type { PortfolioPage } from "@/types/portfolio";
 import { projects } from "@/data/projects";
 
-const DATING_APP_AD_VIDEO_ID = "zhI1k2TdGPQ";
-// maxresdefault.jpg confirmed live for this video (curl -I → 200, downloaded and verified as a
-// real 1280x720 JPEG, not YouTube's ~8-10KB grey placeholder that some videos return with a
-// false 200) — used directly, no hqdefault.jpg fallback needed.
-const DATING_APP_AD_THUMBNAIL = `https://i.ytimg.com/vi/${DATING_APP_AD_VIDEO_ID}/maxresdefault.jpg`;
-
 const TYPESCRIPT_VIDEO_ID = "L6zrC7gkVwI";
 const TYPESCRIPT_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${TYPESCRIPT_VIDEO_ID}/hqdefault.jpg`;
 
@@ -31,6 +25,12 @@ const NEW_AI_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${NEW_AI_VIDEO_ID}/hqdefa
 const ANANTA_LOGO_ANIMATION_VIDEO_ID = "FzJZ3pWoOsA";
 const ANANTA_LOGO_ANIMATION_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${ANANTA_LOGO_ANIMATION_VIDEO_ID}/hqdefault.jpg`;
 
+// ID extracted from the supplied https://youtu.be/4WA8KYPtX3E link. Title/author verbatim from
+// the YouTube oEmbed API (fetched live). maxresdefault.jpg confirmed live (HTTP 200, ~272KB —
+// a real 1280x720 JPEG, not YouTube's ~8-10KB grey placeholder), so it's used directly.
+const AI_HOME_TRANSFORMATION_AD_VIDEO_ID = "4WA8KYPtX3E";
+const AI_HOME_TRANSFORMATION_AD_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${AI_HOME_TRANSFORMATION_AD_VIDEO_ID}/maxresdefault.jpg`;
+
 export const aiGenerativePage: PortfolioPage = {
   id: "ai-generative",
   label: "AI & Generative",
@@ -42,6 +42,33 @@ export const aiGenerativePage: PortfolioPage = {
       // Video thumbnails are 16:9 — the default 1:1 square would crop them top/bottom.
       aspectRatio: "16/9",
       items: [
+        {
+          id: "ai-home-transformation-ad",
+          title: "I Created This AI Video Ad in Minutes (Before/After Home Transformation)",
+          thumbnail: AI_HOME_TRANSFORMATION_AD_VIDEO_THUMBNAIL,
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: AI_HOME_TRANSFORMATION_AD_VIDEO_ID,
+            videoTitle:
+              "I Created This AI Video Ad in Minutes (Before/After Home Transformation)",
+            thumbnail: AI_HOME_TRANSFORMATION_AD_VIDEO_THUMBNAIL,
+            overview:
+              "An AI-generated video ad built in minutes, showing a before/after home transformation — a quick demonstration of generating a polished promo concept with an AI video workflow.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "AI video generation from a before/after concept",
+              "Shot selection and sequence assembly",
+              "Final edit, pacing, and captions for a social promo",
+            ],
+            youtubeUrl: `https://youtu.be/${AI_HOME_TRANSFORMATION_AD_VIDEO_ID}`,
+          },
+        },
         {
           id: "ananta-event-entertainment-logo-animation",
           title: "Ananta Event & Entertainment — Logo Animation Reveal | Motion Graphics Portfolio",
@@ -175,43 +202,6 @@ export const aiGenerativePage: PortfolioPage = {
               "Colour and sound treatment for an immersive ride experience",
             ],
             youtubeUrl: `https://youtu.be/${DIRT_BIKE_ADVENTURE_VIDEO_ID}`,
-          },
-        },
-        {
-          id: "dating-app-ad",
-          // Exact title from the YouTube oEmbed API (fetched live, not guessed) — short enough
-          // to use verbatim as the card label (36 characters, one line at normal card widths).
-          title: "The hardest part of a dating app ad",
-          thumbnail: DATING_APP_AD_THUMBNAIL,
-          details: [
-            { label: "Format", value: "16:9 video", type: "text" },
-            { label: "Platform", value: "YouTube", type: "text" },
-          ],
-          videoBoard: {
-            videoId: DATING_APP_AD_VIDEO_ID,
-            videoTitle: "The hardest part of a dating app ad",
-            thumbnail: DATING_APP_AD_THUMBNAIL,
-            // ASSUMED — I haven't watched the video; this is inferred from the title and the
-            // channel's own name ("Abu Kalam Khandaker's Perspective," a commentary-style
-            // channel, not a raw reel) rather than verified content.
-            overview:
-              "A behind-the-scenes look at producing a short-form dating-app advertisement — the creative and technical challenge of making an ad concept land in just a few seconds. Part of an ongoing series on AI-assisted video production.",
-            specs: [
-              // ASSUMED — duration and format aren't available from the oEmbed response.
-              { label: "Duration", value: "0:30" },
-              // FACT — maxresdefault.jpg downloaded and measured at 1280x720.
-              { label: "Aspect Ratio", value: "16:9" },
-              { label: "Format", value: "MP4, YouTube upload" },
-            ],
-            // ASSUMED — the specific tools/workflow aren't verifiable from the video's public
-            // metadata; a reasonable draft for an AI-video-engineer's own reel.
-            pipeline: [
-              "AI-assisted generative video (prompt-to-render)",
-              "Edited and paced in a non-linear editor",
-              "Colour graded for a punchy, high-contrast social feed look",
-            ],
-            // FACT — canonical short link, matches the video ID above.
-            youtubeUrl: `https://youtu.be/${DATING_APP_AD_VIDEO_ID}`,
           },
         },
         {
