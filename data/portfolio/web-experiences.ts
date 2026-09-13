@@ -24,7 +24,7 @@ export const webExperiencesPage: PortfolioPage = {
           tagline: "Privacy-First Matrimonial",
           description:
             "Multi-level verified matchmaking platform with consent-based photo reveals and encrypted communication.",
-          thumbnail: `${WEB_DEV_DIR}/match-media.png`,
+          thumbnail: "/match-media.png",
           liveUrl: "https://match-media.vercel.app/en",
           linkLabel: "Live Demo",
           details: [
@@ -52,7 +52,7 @@ export const webExperiencesPage: PortfolioPage = {
           tagline: "Brand & Creative Showcase",
           description:
             "Interactive portfolio highlighting brand identity systems, AI video workflows, and web development.",
-          thumbnail: `${WEB_DEV_DIR}/kalam-portfolio.png`,
+          thumbnail: "/kalam52526.png",
           liveUrl: "https://kalam-portfolio-phi.vercel.app",
           linkLabel: "Live Demo",
           details: [
