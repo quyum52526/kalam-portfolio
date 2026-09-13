@@ -147,7 +147,7 @@ export const webExperiencesPage: PortfolioPage = {
           tagline: "E-COMMERCE",
           description:
             "A full-stack, responsive e-commerce web application engineered for smooth online retail operations and fast checkout experiences.",
-          thumbnail: "GAP",
+          thumbnail: "/rayyan.png",
           liveUrl: "https://www.rayyan.com.bd/",
           linkLabel: "Live Demo",
           details: [
