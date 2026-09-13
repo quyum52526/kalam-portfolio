@@ -141,6 +141,40 @@ export const webExperiencesPage: PortfolioPage = {
             },
           ],
         },
+        {
+          id: "rayyan-e-commerce",
+          title: "Rayyan E-Commerce",
+          tagline: "E-COMMERCE",
+          description:
+            "A full-stack, responsive e-commerce web application engineered for smooth online retail operations and fast checkout experiences.",
+          thumbnail: "GAP",
+          liveUrl: "https://www.rayyan.com.bd/",
+          linkLabel: "Live Demo",
+          details: [
+            {
+              label: "Description",
+              value:
+                "A full-stack, responsive e-commerce web application engineered for smooth online retail operations and fast checkout experiences. Developed with a robust backend architecture (Laravel) and a modern UI focused on user conversion and mobile responsiveness.",
+              type: "paragraph",
+            },
+            {
+              label: "Key Features",
+              value:
+                "Dynamic Product Catalog: Categorized product listings, advanced filtering, and instant search functionality.\nOrder & Cart Flow: Streamlined cart management, secure multi-step checkout, and seamless order tracking.\nAdmin Dashboard: Centralized control for inventory tracking, order status updates, and sales analytics.\nPerformance & Security: Optimized database queries, caching for fast load speeds, and secure payment processing.",
+              type: "paragraph",
+            },
+            {
+              label: "Live URL",
+              value: "https://www.rayyan.com.bd/",
+              type: "text",
+            },
+            {
+              label: "Tech Stack",
+              value: "Laravel, responsive web UI",
+              type: "text",
+            },
+          ],
+        },
       ],
     },
   ],
