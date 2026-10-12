@@ -33,6 +33,13 @@ const SMART_TOOTHBRUSH_AD_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${SMART_TOOT
 const DIRT_BIKE_PORTFOLIO_CUT_VIDEO_ID = "O_hw-7_jEY8";
 const DIRT_BIKE_PORTFOLIO_CUT_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${DIRT_BIKE_PORTFOLIO_CUT_VIDEO_ID}/hqdefault.jpg`;
 
+
+// ID from the supplied https://youtube.com/shorts/AaNi4bcEliQ link — a vertical Short. Its
+// stored thumbnail is a pillarboxed canvas (confirmed by opening it): hqdefault.jpg is 480x360
+// with the real 9:16 frame centred at 360*(9/16)=202.5px wide, which is exactly what this
+// group's 9:16 object-cover card crop keeps — no bars survive the crop.
+const BITE_POS_PROMO_VIDEO_ID = "AaNi4bcEliQ";
+const BITE_POS_PROMO_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${BITE_POS_PROMO_VIDEO_ID}/hqdefault.jpg`;
 export const motionReelsPage: PortfolioPage = {
   id: "motion-reels",
   label: "Motion & Reels",
@@ -44,6 +51,45 @@ export const motionReelsPage: PortfolioPage = {
       // Vertical Short thumbnails are 9:16 — the default 1:1 square would crop them further.
       aspectRatio: "9/16",
       items: [
+        {
+          id: "bite-pos-promo-animation",
+          title: "Bite POS Promo Animation Video | SaaS Product Demo & Motion Graphics Showcase",
+          thumbnail: BITE_POS_PROMO_VIDEO_THUMBNAIL,
+          tags: [
+            "saas promo",
+            "product demo",
+            "motion graphics",
+            "explainer video",
+            "ui animation",
+            "after effects",
+            "bite pos",
+            "video editing",
+          ],
+          details: [
+            { label: "Format", value: "9:16 video", type: "text" },
+            { label: "Platform", value: "YouTube Shorts", type: "text" },
+          ],
+          videoBoard: {
+            videoId: BITE_POS_PROMO_VIDEO_ID,
+            videoTitle:
+              "Bite POS Promo Animation Video | SaaS Product Demo & Motion Graphics Showcase",
+            thumbnail: BITE_POS_PROMO_VIDEO_THUMBNAIL,
+            orientation: "portrait",
+            overview:
+              "High-impact SaaS product demo and promo animation created for Bite POS. Features dynamic 2D motion graphics, UI workflows, retail POS feature breakdowns, and commercial explainer storytelling.",
+            specs: [
+              { label: "Aspect Ratio", value: "9:16" },
+              { label: "Format", value: "MP4, YouTube Short" },
+            ],
+            pipeline: [
+              "SaaS Product Demo & UI Animation",
+              "Commercial Motion Design",
+              "2D Explainer Video Production",
+              "Audio Sync & Kinetic Motion",
+            ],
+            youtubeUrl: `https://youtube.com/shorts/${BITE_POS_PROMO_VIDEO_ID}`,
+          },
+        },
         {
           id: "dirt-bike-adventure-portfolio-cut",
           title: "Dirt Bike Adventure Edit — Off-Road Forest Trails, Cliff Jumps & Beach Rides",

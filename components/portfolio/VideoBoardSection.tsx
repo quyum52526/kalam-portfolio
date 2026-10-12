@@ -21,9 +21,14 @@ import {
 export function VideoBoardSection({
   board,
   title,
+  tags,
 }: {
   board: VideoBoard;
   title: string;
+  /** PortfolioItem.tags — keyword chips rendered below the pipeline list. Passed in rather
+   *  than read off VideoBoard because tags describe the portfolio item, not the video itself,
+   *  and non-video items can carry them too. Omitted/empty renders no chip row. */
+  tags?: string[];
 }) {
   const [playing, setPlaying] = useState(false);
   const isPortrait = board.orientation === "portrait";
@@ -78,9 +83,11 @@ export function VideoBoardSection({
         <div className="flex justify-center bg-surface-inset p-4">
           {/* max-h-[380px] (not 420px) — measured against this board's real Overview/Specs/
               Pipeline/Watch-link content: 420px pushed the modal's total height to 777px on a
-              900px-tall viewport, 12px past the 85vh (765px) scroll budget. 380px keeps the
-              whole popup visible with no internal scroll needed at 900px, with margin to spare
-              for slightly taller copy in future items. */}
+              900px-tall viewport, 12px past the 85vh (765px) scroll budget. 380px kept the
+              whole popup visible with no internal scroll at 900px. A tags row (when the item
+              carries tags) adds ~27px past that budget — measured at 792px vs 765px — so such
+              an item scrolls by that much rather than the player being shrunk for every
+              portrait item, tagged or not. */}
           <div className="relative aspect-[9/16] h-[50vh] max-h-[380px] w-auto">{player}</div>
         </div>
       ) : (
@@ -119,7 +126,26 @@ export function VideoBoardSection({
         </ul>
       </div>
 
-      {/* Row 5 — Watch on YouTube. Skipped when youtubeUrl is absent (e.g. the video has been
+      {/* Row 5 — Keyword chips. Skipped entirely when the item carries no tags, so every
+          existing video item renders exactly as before. Static text only — no images, no
+          client-side measurement — so the row adds no layout shift after hydration. */}
+      {tags && tags.length > 0 ? (
+        <div className={cn("border-t border-border bg-surface-inset", BLOCK_PADDING)}>
+          <p className={GUIDE_HEADING_CLASS}>Tags</p>
+          <ul className="mt-1.5 flex flex-wrap gap-1.5">
+            {tags.map((tag) => (
+              <li
+                key={tag}
+                className="rounded-full border border-border bg-surface-card px-2 py-0.5 text-[10px] leading-snug text-text-body"
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {/* Row 6 — Watch on YouTube. Skipped when youtubeUrl is absent (e.g. the video has been
           taken down) so no dead link is rendered. */}
       {board.youtubeUrl ? (
         <div className={cn("flex justify-center border-t border-border bg-surface-inset", BLOCK_PADDING)}>

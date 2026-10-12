@@ -31,6 +31,12 @@ const ANANTA_LOGO_ANIMATION_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${ANANTA_L
 const AI_HOME_TRANSFORMATION_AD_VIDEO_ID = "4WA8KYPtX3E";
 const AI_HOME_TRANSFORMATION_AD_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${AI_HOME_TRANSFORMATION_AD_VIDEO_ID}/maxresdefault.jpg`;
 
+// ID from the supplied https://youtu.be/UkOCGaPbuM0 link. maxresdefault.jpg confirmed live
+// (HTTP 200, ~62KB — a real 1280x720 JPEG of the HRMS title card, not YouTube's ~8-10KB grey
+// placeholder), so it's used directly.
+const KINETIC_TYPOGRAPHY_VIDEO_ID = "UkOCGaPbuM0";
+const KINETIC_TYPOGRAPHY_VIDEO_THUMBNAIL = `https://i.ytimg.com/vi/${KINETIC_TYPOGRAPHY_VIDEO_ID}/maxresdefault.jpg`;
+
 export const aiGenerativePage: PortfolioPage = {
   id: "ai-generative",
   label: "AI & Generative",
@@ -42,6 +48,47 @@ export const aiGenerativePage: PortfolioPage = {
       // Video thumbnails are 16:9 — the default 1:1 square would crop them top/bottom.
       aspectRatio: "16/9",
       items: [
+        {
+          id: "kinetic-typography-motion-graphics",
+          title: "Kinetic Typography Motion Graphics | UI Animation Demo | After Effects",
+          thumbnail: KINETIC_TYPOGRAPHY_VIDEO_THUMBNAIL,
+          tags: [
+            "motion graphics",
+            "kinetic typography",
+            "video editing",
+            "UI animation",
+            "after effects",
+            "motion design",
+            "video editor",
+            "animated graphics",
+            "visual effects",
+            "neon design",
+          ],
+          details: [
+            { label: "Format", value: "16:9 video", type: "text" },
+            { label: "Platform", value: "YouTube", type: "text" },
+          ],
+          videoBoard: {
+            videoId: KINETIC_TYPOGRAPHY_VIDEO_ID,
+            // Real title from the YouTube oEmbed API (fetched live), which differs from the
+            // card label above — same convention as the other items here.
+            videoTitle: "Kinetic Typography Motion Graphics Product Demo | Tech-Bites HRMS",
+            thumbnail: KINETIC_TYPOGRAPHY_VIDEO_THUMBNAIL,
+            overview:
+              "Professional motion graphics and kinetic typography animation showcasing UI/UX visualization with dynamic text effects and neon motion design. Created using After Effects, Premiere Pro, and AI video tools.",
+            specs: [
+              { label: "Aspect Ratio", value: "16:9" },
+              { label: "Format", value: "MP4, YouTube upload" },
+            ],
+            pipeline: [
+              "Kinetic Typography Animation",
+              "UI Motion Graphics",
+              "Color Grading & Visual Effects",
+              "Text Animation & Motion Design",
+            ],
+            youtubeUrl: `https://youtu.be/${KINETIC_TYPOGRAPHY_VIDEO_ID}`,
+          },
+        },
         {
           id: "ai-home-transformation-ad",
           title: "I Created This AI Video Ad in Minutes (Before/After Home Transformation)",

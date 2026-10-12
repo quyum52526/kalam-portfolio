@@ -111,7 +111,7 @@ export function DetailsModal({
 
             {item.videoBoard ? (
               <div className="max-h-[85vh] overflow-y-auto">
-                <VideoBoardSection board={item.videoBoard} title={item.title} />
+                <VideoBoardSection board={item.videoBoard} title={item.title} tags={item.tags} />
               </div>
             ) : item.brandBoard ? (
               <div className="max-h-[85vh] overflow-y-auto">

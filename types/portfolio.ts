@@ -134,6 +134,10 @@ export interface PortfolioItem {
   tagline?: string;
   /** Micro-description shown beneath the title on card tiles for concise context. */
   description?: string;
+  /** Free-form keyword labels (lowercase, as supplied) — rendered as chips in the details
+   *  modal's video board, below the pipeline list. Omit for items with no keywords; the chip
+   *  row is then not rendered at all, identical to every item before this field existed. */
+  tags?: string[];
   thumbnail: string;
   /** Pin state for the Feature/Pin admin system — NOT set in the static data files.
    *  Populated at render time by lib/featured.ts from the KV-backed featured map, then
